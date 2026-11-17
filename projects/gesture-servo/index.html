@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en"
+  data-title-en="Hand gesture to servo · Atahan Güney"
+  data-title-tr="El hareketiyle servo kontrolü · Atahan Güney"
+  data-desc-en="Computer-vision servo control: OpenCV tracks a hand in the webcam image, Python maps its position to an angle and sends it over UART to an Arduino that drives a servo."
+  data-desc-tr="Görüntü işlemeyle servo kontrolü: OpenCV kamerada eli takip ediyor, Python konumu bir açıya çeviriyor ve UART üzerinden servoyu süren Arduino'ya gönderiyor.">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>(function(){var d=document.documentElement,l=null,t=null;try{l=new URLSearchParams(location.search).get('lang')||localStorage.getItem('lang');t=localStorage.getItem('theme')}catch(e){}if(l==='tr'){d.setAttribute('data-lang','tr');d.lang='tr'}if(t)d.setAttribute('data-theme',t)})()</script>
+<title>Hand gesture to servo · Atahan Güney</title>
+<meta name="description" content="Computer-vision servo control: OpenCV tracks a hand in the webcam image, Python maps its position to an angle and sends it over UART to an Arduino that drives a servo.">
+<meta name="author" content="Atahan Güney">
+<meta name="theme-color" content="#1f4e79">
+<link rel="canonical" href="https://atahanguney.github.io/projects/gesture-servo/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hand gesture → servo">
+<meta property="og:url" content="https://atahanguney.github.io/projects/gesture-servo/">
+<meta property="og:image" content="https://atahanguney.github.io/assets/og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap">
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main"><span lang="en">Skip to content</span><span lang="tr">İçeriğe geç</span></a>
+<header class="top">
+  <div class="wrap">
+    <a class="mark" href="/" aria-label="Atahan Güney">
+      <svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="5" fill="#1f4e79"/><path d="M5 16c2.75-7 8.25-7 11 0s8.25 7 11 0" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round"/><path d="M5 16c2.75 4.2 8.25 4.2 11 0s8.25-4.2 11 0" stroke="#e57368" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg>
+      <span>Atahan Güney</span><small>EEE</small>
+    </a>
+    <div class="right">
+      <nav class="nav" id="nav" aria-label="Main">
+        <a href="/projects/" aria-current="page"><span lang="en">Projects</span><span lang="tr">Projeler</span></a>
+        <a href="/notes/"><span lang="en">Notes</span><span lang="tr">Notlar</span></a>
+        <a href="/about/"><span lang="en">About</span><span lang="tr">Hakkımda</span></a>
+        <a href="/#contact"><span lang="en">Contact</span><span lang="tr">İletişim</span></a>
+      </nav>
+      <span class="switch" role="group" aria-label="Language / Dil"><a href="?lang=en" data-setlang="en" hreflang="en">EN</a><a href="?lang=tr" data-setlang="tr" hreflang="tr">TR</a></span>
+      <button class="theme" id="theme" type="button" aria-label="Toggle colour theme">theme</button>
+      <button class="theme menu-btn" id="menu" type="button" aria-expanded="false" aria-controls="nav">menu</button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <div class="page-head">
+    <div class="wrap">
+      <p class="crumbs"><a href="/projects/"><span lang="en">Projects</span><span lang="tr">Projeler</span></a> / CV-02</p>
+      <p class="eyebrow"><span lang="en">Computer vision · serial link · actuator</span><span lang="tr">Görüntü işleme · seri haberleşme · eyleyici</span></p>
+      <h1><span lang="en">Hand gesture → servo</span><span lang="tr">El hareketi → servo</span></h1>
+      <p class="lede" lang="en">A webcam, a Python script and an Arduino. OpenCV finds my hand in each frame, the script turns its horizontal position into an angle, and the Arduino moves a servo to that angle after reading it from the serial port.</p>
+      <p class="lede" lang="tr">Bir kamera, bir Python scripti ve bir Arduino. OpenCV her karede elimi buluyor, script elin yatay konumunu bir açıya çeviriyor, Arduino da bu açıyı seri porttan okuyup servoyu o açıya getiriyor.</p>
+      <div class="chain" aria-label="Signal chain"><span>Webcam</span><span class="arr">→</span><span>Python + OpenCV</span><span class="arr">→</span><span>UART</span><span class="arr">→</span><span>Arduino</span><span class="arr">→</span><span>PWM</span><span class="arr">→</span><span>Servo</span></div>
+    </div>
+  </div>
+
+  <section>
+    <div class="wrap narrow prose">
+      <div lang="en">
+        <h2>How it works</h2>
+        <p>The project has two halves that only share one thing: a number sent over a USB serial cable.</p>
+        <h3>PC side</h3>
+        <p>Python reads frames from the webcam with OpenCV and finds the hand in the image. From the hand's position the script takes the x coordinate of its centre and maps it linearly to the servo range:</p>
+        <pre><code>angle = int(x / frame_width * 180)     <span class="cmt"># 0 … 180 degrees</span>
+ser.write(f"{angle}\n".encode())</code></pre>
+        <p>Each angle is sent as a short text line ending in a newline, so the Arduino always knows where one value stops and the next one starts.</p>
+        <h3>Board side</h3>
+        <p>The Arduino reads characters until the newline, converts them to an integer, limits it to 0–180 and writes it to the servo. A hobby servo expects a pulse every 20 ms (50 Hz), and the pulse width, roughly 1 ms to 2 ms, sets the angle. The Servo library generates that PWM signal from a timer.</p>
+        <h2>Where the time went</h2>
+        <p>The vision code was the visible part, but a big share of the work was on the physical side: stabilising the breadboard, redoing the wiring until nothing moved, and making sure the signal reached the servo continuously and in the right order. A servo that twitches is usually a wiring or power problem, not a code problem, and finding that out took a multimeter more than a debugger.</p>
+        <div class="callout"><b>Notes for anyone building the same thing.</b> Power the servo from its own 5 V supply with a common ground, not from the Arduino's 5 V pin, since a servo under load can pull enough current to reset the board. Sending a value only when it changes, or at a fixed rate, keeps the serial buffer from filling up. A little smoothing on the angle (the same EMA idea as in <a href="/projects/serialscope/">SerialScope</a>) stops the servo from shaking when the detection jitters.</div>
+        <h2>Concepts used</h2>
+        <p>Hand detection in an image stream, linear coordinate mapping, UART framing with a delimiter, PWM servo control, shared ground between power domains. Short explanations are on the <a href="/notes/">notes page</a>.</p>
+      </div>
+      <div lang="tr">
+        <h2>Nasıl çalışıyor</h2>
+        <p>Projenin, ortak tek bir şeyi olan iki yarısı var: USB seri kablo üzerinden gönderilen bir sayı.</p>
+        <h3>PC tarafı</h3>
+        <p>Python, OpenCV ile kameradan kareleri okuyor ve görüntüde eli buluyor. Script elin konumundan merkezinin x koordinatını alıyor ve bunu doğrusal olarak servo aralığına eşliyor:</p>
+        <pre><code>angle = int(x / frame_width * 180)     <span class="cmt"># 0 … 180 derece</span>
+ser.write(f"{angle}\n".encode())</code></pre>
+        <p>Her açı, satır sonu karakteriyle biten kısa bir metin satırı olarak gönderiliyor; böylece Arduino bir değerin nerede bitip diğerinin nerede başladığını her zaman biliyor.</p>
+        <h3>Kart tarafı</h3>
+        <p>Arduino satır sonuna kadar karakterleri okuyor, bunları tam sayıya çeviriyor, 0–180 aralığına sınırlıyor ve servoya yazıyor. Hobi servoları her 20 ms'de (50 Hz) bir darbe bekliyor; yaklaşık 1 ms ile 2 ms arasındaki darbe genişliği açıyı belirliyor. Bu PWM sinyalini Servo kütüphanesi bir zamanlayıcı ile üretiyor.</p>
+        <h2>Zamanın çoğu nereye gitti</h2>
+        <p>Görünen kısım görüntü işleme koduydu ama işin büyük bir kısmı fiziksel taraftaydı: breadboard'u sabitlemek, hiçbir şey oynamayana kadar kabloları yeniden yapmak ve sinyalin servoya kesintisiz ve doğru sırayla ulaştığından emin olmak. Titreyen bir servo genelde kod değil, kablolama ya da besleme sorunudur; bunu bulmak da debugger'dan çok multimetre gerektirdi.</p>
+        <div class="callout"><b>Aynısını yapmak isteyenler için notlar.</b> Servoyu Arduino'nun 5 V pininden değil, ortak toprağa bağlı ayrı bir 5 V kaynaktan besleyin; yük altındaki bir servo kartı resetleyecek kadar akım çekebilir. Değeri sadece değiştiğinde ya da sabit bir hızda göndermek seri tamponun dolmasını engelliyor. Açıya biraz yumuşatma eklemek (<a href="/projects/serialscope/">SerialScope</a>'taki EMA fikriyle aynı), algılama titrediğinde servonun sallanmasını önlüyor.</div>
+        <h2>Kullanılan kavramlar</h2>
+        <p>Görüntü akışında el algılama, doğrusal koordinat eşleme, ayraçla UART çerçeveleme, PWM ile servo kontrolü, güç kaynakları arasında ortak toprak. Kısa açıklamalar <a href="/notes/">notlar sayfasında</a>.</p>
+      </div>
+      <div class="next" style="margin-top:40px">
+        <a href="/projects/drowsiness/"><small>← CV-01</small><span lang="en">Drowsiness detection</span><span lang="tr">Yorgunluk tespiti</span></a>
+        <a href="/projects/ble-display/"><small>→ IOT-01</small><span lang="en">ESP32 notification display</span><span lang="tr">ESP32 bildirim ekranı</span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="year">2026</span> Atahan Güney</span>
+    <span class="rev">rev E · 2026-11 · <a href="https://github.com/atahanguney/atahanguney.github.io"><span lang="en">site source</span><span lang="tr">site kaynak kodu</span></a></span>
+  </div>
+</footer>
+<script src="/assets/site.js" defer></script>
+</body>
+</html>

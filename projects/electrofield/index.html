@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en"
+  data-title-en="ElectroField · how it works · Atahan Güney"
+  data-title-tr="ElectroField · nasıl çalışıyor · Atahan Güney"
+  data-desc-en="How ElectroField works: a Python electromagnetics engine that runs in the browser with Pyodide, shows each derivation and checks every result a second, independent way."
+  data-desc-tr="ElectroField nasıl çalışıyor: Pyodide ile tarayıcıda çalışan, her türetmeyi gösteren ve her sonucu ikinci, bağımsız bir yolla kontrol eden Python elektromanyetik motoru.">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>(function(){var d=document.documentElement,l=null,t=null;try{l=new URLSearchParams(location.search).get('lang')||localStorage.getItem('lang');t=localStorage.getItem('theme')}catch(e){}if(l==='tr'){d.setAttribute('data-lang','tr');d.lang='tr'}if(t)d.setAttribute('data-theme',t)})()</script>
+<title>ElectroField · how it works · Atahan Güney</title>
+<meta name="description" content="How ElectroField works: a Python electromagnetics engine that runs in the browser with Pyodide, shows each derivation and checks every result a second, independent way.">
+<meta name="author" content="Atahan Güney">
+<meta name="theme-color" content="#1f4e79">
+<link rel="canonical" href="https://atahanguney.github.io/projects/electrofield/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ElectroField · how it works">
+<meta property="og:description" content="A Python electromagnetics engine in the browser, with derivations and independent verification.">
+<meta property="og:url" content="https://atahanguney.github.io/projects/electrofield/">
+<meta property="og:image" content="https://atahanguney.github.io/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{ "@context": "https://schema.org", "@type": "WebApplication", "name": "ElectroField", "url": "https://atahanguney.github.io/ElectroField/", "applicationCategory": "EducationalApplication", "operatingSystem": "Any (web browser)", "isAccessibleForFree": true, "codeRepository": "https://github.com/atahanguney/ElectroField", "author": { "@type": "Person", "name": "Atahan Güney", "url": "https://atahanguney.github.io/" } }
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap">
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main"><span lang="en">Skip to content</span><span lang="tr">İçeriğe geç</span></a>
+<header class="top">
+  <div class="wrap">
+    <a class="mark" href="/" aria-label="Atahan Güney">
+      <svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="5" fill="#1f4e79"/><path d="M5 16c2.75-7 8.25-7 11 0s8.25 7 11 0" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round"/><path d="M5 16c2.75 4.2 8.25 4.2 11 0s8.25-4.2 11 0" stroke="#e57368" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg>
+      <span>Atahan Güney</span><small>EEE</small>
+    </a>
+    <div class="right">
+      <nav class="nav" id="nav" aria-label="Main">
+        <a href="/projects/" aria-current="page"><span lang="en">Projects</span><span lang="tr">Projeler</span></a>
+        <a href="/notes/"><span lang="en">Notes</span><span lang="tr">Notlar</span></a>
+        <a href="/about/"><span lang="en">About</span><span lang="tr">Hakkımda</span></a>
+        <a href="/#contact"><span lang="en">Contact</span><span lang="tr">İletişim</span></a>
+      </nav>
+      <span class="switch" role="group" aria-label="Language / Dil"><a href="?lang=en" data-setlang="en" hreflang="en">EN</a><a href="?lang=tr" data-setlang="tr" hreflang="tr">TR</a></span>
+      <button class="theme" id="theme" type="button" aria-label="Toggle colour theme">theme</button>
+      <button class="theme menu-btn" id="menu" type="button" aria-expanded="false" aria-controls="nav">menu</button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <div class="page-head">
+    <div class="wrap">
+      <p class="crumbs"><a href="/projects/"><span lang="en">Projects</span><span lang="tr">Projeler</span></a> / SW-01</p>
+      <p class="eyebrow"><span lang="en">Web app · Python engine in the browser</span><span lang="tr">Web uygulaması · tarayıcıda Python motoru</span></p>
+      <h1>ElectroField</h1>
+      <p class="lede" lang="en">An applied electromagnetics workbench. You change ε, μ, σ, the frequency or the geometry, and a Python engine recomputes the result, writes the derivation out with the numbers in it, and then checks the answer with a second method that does not share code with the first.</p>
+      <p class="lede" lang="tr">Uygulamalı elektromanyetik için bir çalışma ortamı. ε, μ, σ, frekans ya da geometriyi değiştiriyorsunuz; Python motoru sonucu yeniden hesaplıyor, türetmeyi sayılar yerine konmuş halde yazıyor ve sonra cevabı, ilkiyle kod paylaşmayan ikinci bir yöntemle kontrol ediyor.</p>
+      <div class="cta">
+        <a class="btn primary" href="https://atahanguney.github.io/ElectroField/"><span lang="en">Open the live app</span><span lang="tr">Canlı uygulamayı aç</span></a>
+        <a class="btn ghost" href="https://github.com/atahanguney/ElectroField"><span lang="en">Source on GitHub</span><span lang="tr">GitHub'da kaynak kod</span></a>
+      </div>
+      <div class="facts">
+        <div><b>9</b><span lang="en">chapters</span><span lang="tr">bölüm</span></div>
+        <div><b>86</b><span lang="en">worked problems</span><span lang="tr">çözümlü problem</span></div>
+        <div><b>27</b><span lang="en">question templates</span><span lang="tr">soru şablonu</span></div>
+        <div><b>439</b><span lang="en">pytest tests</span><span lang="tr">pytest testi</span></div>
+        <div><b>30</b><span lang="en">reference cases</span><span lang="tr">referans vaka</span></div>
+        <div><b>MIT</b><span lang="en">licence</span><span lang="tr">lisans</span></div>
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <div class="wrap article">
+      <nav class="toc" aria-label="On this page">
+        <div lang="en"><a href="#why">Why I built it</a><a href="#arch">Architecture</a><a href="#verify">Verification</a><a href="#browser">Python in the browser</a><a href="#tutor">The assistant</a><a href="#learned">What I learned</a></div>
+        <div lang="tr"><a href="#tr-why">Neden yaptım</a><a href="#tr-arch">Mimari</a><a href="#tr-verify">Doğrulama</a><a href="#tr-browser">Tarayıcıda Python</a><a href="#tr-tutor">Asistan</a><a href="#tr-learned">Ne öğrendim</a></div>
+      </nav>
+
+      <div class="prose">
+        <div lang="en">
+          <h2 id="why">Why I built it</h2>
+          <p>Electromagnetics was the first course where I could follow every step of a solution and still not trust the final number. A sign error in a reflection coefficient or a wrong branch of a complex square root gives an answer that looks perfectly reasonable. The textbooks (Ulaby &amp; Ravaioli, and Cheng) give the method, but when I changed one parameter on my own I had no way to tell whether my new answer was right.</p>
+          <p>So I started writing small Python functions for each topic, and every time I wrote one I also wrote a second way to get the same number. Over time those functions turned into an engine, and the engine needed an interface, which became ElectroField.</p>
+
+          <h2 id="arch">Architecture</h2>
+          <div class="chain" aria-label="Data flow"><span>UI (ES modules)</span><span class="arr">→</span><span>Python engine/</span><span class="arr">→</span><span>result + derivation</span><span class="arr">→</span><span>independent check</span><span class="arr">→</span><span>Plotly / KaTeX</span></div>
+          <p>The project has three layers, and I kept them strictly separate:</p>
+          <ul>
+            <li><strong>engine/</strong> is plain Python with NumPy and SciPy. It knows nothing about the web. Each solver returns the numerical result, the derivation steps as LaTeX strings with the values substituted, and the result of the cross-check. Physical constants come from SciPy's CODATA tables, not from numbers I typed in.</li>
+            <li><strong>The server</strong> is a thin FastAPI app for local development. It only turns HTTP requests into engine calls.</li>
+            <li><strong>The frontend</strong> is ES modules without a framework. Plotly draws the fields and the Smith chart, KaTeX renders the derivations.</li>
+          </ul>
+          <p>The chapters follow the course order: vectors and coordinate systems, electrostatics, magnetostatics, Maxwell's equations, plane waves in lossy media, reflection and transmission, transmission lines, and waveguides and antennas.</p>
+
+          <h2 id="verify">Verification: every number is computed twice</h2>
+          <p>This is the part I care about most. A result counts as verified only if a second method agrees with it within a tolerance. If they disagree, the page says so next to the number instead of hiding it. Some examples of the pairs:</p>
+          <div class="tscroll"><table class="t">
+            <tr><th>Quantity</th><th>Method A</th><th>Method B (check)</th></tr>
+            <tr><td>α, β in a lossy medium</td><td>Closed-form expressions</td><td>Real and imaginary parts of γ = √(jωμ(σ + jωε))</td></tr>
+            <tr><td>Z<sub>in</sub> of a line</td><td>Z<sub>0</sub>(Z<sub>L</sub> + jZ<sub>0</sub>tan βl)/(Z<sub>0</sub> + jZ<sub>L</sub>tan βl)</td><td>ABCD-matrix cascade of short sections</td></tr>
+            <tr><td>Plane-wave fields</td><td>Phasor solution</td><td>Put the fields back into Maxwell's equations, check the residual</td></tr>
+            <tr><td>Reflection at an interface</td><td>Γ and τ from impedances</td><td>Power balance: |Γ|² + transmitted power ratio = 1</td></tr>
+          </table></div>
+          <p>On top of that there are 439 pytest tests. Many of them test limiting cases instead of single numbers, for example that a lossy medium with σ → 0 gives the lossless result, or that a quarter-wave line turns a short into an open. A separate verification report compares 30 reference problems with the site's numbers and can be downloaded as CSV.</p>
+          <pre><code><span class="cmt"># run the full suite</span>
+python -m pytest -q -p no:anyio tests</code></pre>
+
+          <h2 id="browser">Python in the browser with Pyodide</h2>
+          <p>I didn't want two engines, one in Python for the tests and one in JavaScript for the web page, because the two would drift apart and the tests would stop meaning anything. Pyodide solved that: it is CPython compiled to WebAssembly, and it can load NumPy and SciPy. The exact same <code>engine/</code> package runs on the server and in the visitor's browser.</p>
+          <p>The cost is the first load, which downloads about 30 MB. After that the browser caches it and the app works without a server, which also means it can be hosted on GitHub Pages for free. I think that trade-off is worth it for a study tool, but it is the first thing I would look at if the app had many mobile users.</p>
+
+          <h2 id="tutor">The assistant</h2>
+          <p>ElectroField has a built-in tutor that works offline and only uses numbers the engine already computed. There is also an optional assistant that uses Claude with tool use: the model does not calculate anything itself, it chooses which engine solver to call and with which parameters, and the answer it shows comes from the engine. I designed it this way because a language model doing arithmetic on complex impedances is exactly the kind of "reasonable looking but wrong" answer the project was built to avoid.</p>
+
+          <h2 id="learned">What I learned</h2>
+          <ul>
+            <li>Writing the check is often harder than writing the solver, and it is where most of my bugs were found.</li>
+            <li>Complex square roots need care: the principal branch is not always the physical one, and the sign of α decides whether a wave decays or grows.</li>
+            <li>Separating the engine from the interface early saved me later. Because the engine had no web code in it, adding the browser version was mostly a packaging job.</li>
+            <li>Units and constants should come from one place. I stopped typing 8.854e-12 by hand very quickly.</li>
+          </ul>
+        </div>
+
+        <div lang="tr">
+          <h2 id="tr-why">Neden yaptım</h2>
+          <p>Elektromanyetik, bir çözümün her adımını takip edip yine de sonuçtaki sayıya güvenemediğim ilk ders oldu. Bir yansıma katsayısındaki işaret hatası ya da karmaşık karekökte yanlış dalı seçmek, gayet mantıklı görünen bir cevap veriyor. Kitaplar (Ulaby &amp; Ravaioli ve Cheng) yöntemi anlatıyor ama ben kendi başıma bir parametreyi değiştirdiğimde yeni cevabımın doğru olup olmadığını anlamanın bir yolu yoktu.</p>
+          <p>Bu yüzden her konu için küçük Python fonksiyonları yazmaya başladım ve her fonksiyonu yazarken aynı sayıya ulaşmanın ikinci bir yolunu da yazdım. Zamanla bu fonksiyonlar bir motora dönüştü, motorun da bir arayüze ihtiyacı oldu. ElectroField böyle ortaya çıktı.</p>
+
+          <h2 id="tr-arch">Mimari</h2>
+          <div class="chain" aria-label="Veri akışı"><span>Arayüz (ES modülleri)</span><span class="arr">→</span><span>Python engine/</span><span class="arr">→</span><span>sonuç + türetme</span><span class="arr">→</span><span>bağımsız kontrol</span><span class="arr">→</span><span>Plotly / KaTeX</span></div>
+          <p>Proje üç katmandan oluşuyor ve bunları birbirinden kesin olarak ayrı tuttum:</p>
+          <ul>
+            <li><strong>engine/</strong> NumPy ve SciPy kullanan düz Python. Web hakkında hiçbir şey bilmiyor. Her çözücü sayısal sonucu, değerleri yerine konmuş LaTeX türetme adımlarını ve çapraz kontrolün sonucunu döndürüyor. Fiziksel sabitler elle yazdığım sayılardan değil, SciPy'ın CODATA tablolarından geliyor.</li>
+            <li><strong>Sunucu</strong>, yerel geliştirme için ince bir FastAPI uygulaması. Tek işi HTTP isteklerini motor çağrılarına çevirmek.</li>
+            <li><strong>Arayüz</strong> framework kullanmayan ES modüllerinden oluşuyor. Alanları ve Smith abağını Plotly çiziyor, türetmeleri KaTeX gösteriyor.</li>
+          </ul>
+          <p>Bölümler ders sırasını takip ediyor: vektörler ve koordinat sistemleri, elektrostatik, manyetostatik, Maxwell denklemleri, kayıplı ortamda düzlem dalgalar, yansıma ve iletim, iletim hatları, dalga kılavuzları ve antenler.</p>
+
+          <h2 id="tr-verify">Doğrulama: her sayı iki kez hesaplanıyor</h2>
+          <p>Projede en çok önem verdiğim kısım bu. Bir sonuç, ancak ikinci bir yöntem onu belirli bir tolerans içinde doğrularsa doğrulanmış sayılıyor. İki yöntem uyuşmazsa sayfa bunu saklamak yerine sayının hemen yanında söylüyor. Birkaç örnek:</p>
+          <div class="tscroll"><table class="t">
+            <tr><th>Büyüklük</th><th>Yöntem A</th><th>Yöntem B (kontrol)</th></tr>
+            <tr><td>Kayıplı ortamda α, β</td><td>Kapalı form ifadeler</td><td>γ = √(jωμ(σ + jωε)) ifadesinin gerçel ve sanal kısımları</td></tr>
+            <tr><td>Hattın Z<sub>in</sub> değeri</td><td>Z<sub>0</sub>(Z<sub>L</sub> + jZ<sub>0</sub>tan βl)/(Z<sub>0</sub> + jZ<sub>L</sub>tan βl)</td><td>Kısa parçaların ABCD matrisleriyle art arda bağlanması</td></tr>
+            <tr><td>Düzlem dalga alanları</td><td>Fazör çözümü</td><td>Alanları Maxwell denklemlerine geri koyup artığı kontrol etmek</td></tr>
+            <tr><td>Arayüzde yansıma</td><td>Empedanslardan Γ ve τ</td><td>Güç dengesi: |Γ|² + iletilen güç oranı = 1</td></tr>
+          </table></div>
+          <p>Bunun üstüne 439 pytest testi var. Bunların çoğu tek bir sayıyı değil, limit durumlarını test ediyor; örneğin σ → 0 olduğunda kayıplı ortamın kayıpsız sonucu vermesi ya da çeyrek dalga boyu hattın kısa devreyi açık devreye çevirmesi. Ayrıca 30 referans problemi sitedeki sayılarla karşılaştıran ve CSV olarak indirilebilen bir doğrulama raporu da var.</p>
+          <pre><code><span class="cmt"># tüm testleri çalıştır</span>
+python -m pytest -q -p no:anyio tests</code></pre>
+
+          <h2 id="tr-browser">Pyodide ile tarayıcıda Python</h2>
+          <p>Biri testler için Python'da, diğeri web sayfası için JavaScript'te olan iki ayrı motor istemedim; çünkü ikisi zamanla birbirinden ayrışır ve testlerin bir anlamı kalmaz. Bunu Pyodide çözdü: WebAssembly'ye derlenmiş CPython ve NumPy ile SciPy'ı yükleyebiliyor. Birebir aynı <code>engine/</code> paketi hem sunucuda hem de ziyaretçinin tarayıcısında çalışıyor.</p>
+          <p>Bunun bedeli ilk açılış: yaklaşık 30 MB indiriliyor. Sonrasında tarayıcı bunu önbelleğe alıyor ve uygulama sunucusuz çalışıyor; bu da sitenin GitHub Pages'te ücretsiz barındırılabilmesi demek. Bir çalışma aracı için bu takasın mantıklı olduğunu düşünüyorum, ama uygulamanın çok sayıda mobil kullanıcısı olsaydı ilk bakacağım yer burası olurdu.</p>
+
+          <h2 id="tr-tutor">Asistan</h2>
+          <p>ElectroField'da çevrimdışı çalışan ve sadece motorun zaten hesapladığı sayıları kullanan bir yardımcı var. Bir de isteğe bağlı, Claude'u tool use ile kullanan bir asistan var: model kendisi hiçbir şey hesaplamıyor, sadece hangi motor çözücüsünün hangi parametrelerle çağrılacağını seçiyor; gösterilen cevap motordan geliyor. Bunu bilerek böyle tasarladım, çünkü karmaşık empedanslar üzerinde aritmetik yapan bir dil modeli, tam da bu projenin önlemek için yapıldığı "mantıklı görünen ama yanlış" cevap türünü üretir.</p>
+
+          <h2 id="tr-learned">Ne öğrendim</h2>
+          <ul>
+            <li>Kontrolü yazmak çoğu zaman çözücüyü yazmaktan daha zor ve hatalarımın çoğunu orada buldum.</li>
+            <li>Karmaşık karekök dikkat istiyor: esas dal her zaman fiziksel olan dal değil ve α'nın işareti dalganın sönümlenip sönümlenmediğine karar veriyor.</li>
+            <li>Motoru arayüzden erkenden ayırmak sonradan çok işime yaradı. Motorda hiç web kodu olmadığı için tarayıcı sürümünü eklemek büyük ölçüde bir paketleme işiydi.</li>
+            <li>Birimler ve sabitler tek bir yerden gelmeli. 8.854e-12'yi elle yazmayı çok çabuk bıraktım.</li>
+          </ul>
+        </div>
+
+        <div class="next" style="margin-top:40px">
+          <a href="/projects/"><small>←</small><span lang="en">All projects</span><span lang="tr">Tüm projeler</span></a>
+          <a href="/projects/serialscope/"><small>→ SW-02</small>SerialScope</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="year">2026</span> Atahan Güney</span>
+    <span class="rev">rev E · 2026-11 · <a href="https://github.com/atahanguney/atahanguney.github.io"><span lang="en">site source</span><span lang="tr">site kaynak kodu</span></a></span>
+  </div>
+</footer>
+<script src="/assets/site.js" defer></script>
+</body>
+</html>

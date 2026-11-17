@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en"
+  data-title-en="Telegram-controlled relay, Morse &amp; thermal log · Atahan Güney"
+  data-title-tr="Telegram kontrollü röle, Mors ve sıcaklık kaydı · Atahan Güney"
+  data-desc-en="A Raspberry Pi IoT system: a Telegram bot switches power through a relay module and turns text into Morse code audio, while a logger compares the CPU temperature with the room temperature."
+  data-desc-tr="Bir Raspberry Pi IoT sistemi: Telegram botu röle modülü üzerinden gücü açıp kapatıyor ve metni Mors kodu sesine çeviriyor; bir kayıt scripti de CPU sıcaklığını oda sıcaklığıyla karşılaştırıyor.">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>(function(){var d=document.documentElement,l=null,t=null;try{l=new URLSearchParams(location.search).get('lang')||localStorage.getItem('lang');t=localStorage.getItem('theme')}catch(e){}if(l==='tr'){d.setAttribute('data-lang','tr');d.lang='tr'}if(t)d.setAttribute('data-theme',t)})()</script>
+<title>Telegram-controlled relay, Morse &amp; thermal log · Atahan Güney</title>
+<meta name="description" content="A Raspberry Pi IoT system: a Telegram bot switches power through a relay module and turns text into Morse code audio, while a logger compares the CPU temperature with the room temperature.">
+<meta name="author" content="Atahan Güney">
+<meta name="theme-color" content="#1f4e79">
+<link rel="canonical" href="https://atahanguney.github.io/projects/telegram-morse/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Telegram-controlled relay, Morse &amp; thermal log">
+<meta property="og:url" content="https://atahanguney.github.io/projects/telegram-morse/">
+<meta property="og:image" content="https://atahanguney.github.io/assets/og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap">
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main"><span lang="en">Skip to content</span><span lang="tr">İçeriğe geç</span></a>
+<header class="top">
+  <div class="wrap">
+    <a class="mark" href="/" aria-label="Atahan Güney">
+      <svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="5" fill="#1f4e79"/><path d="M5 16c2.75-7 8.25-7 11 0s8.25 7 11 0" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round"/><path d="M5 16c2.75 4.2 8.25 4.2 11 0s8.25-4.2 11 0" stroke="#e57368" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg>
+      <span>Atahan Güney</span><small>EEE</small>
+    </a>
+    <div class="right">
+      <nav class="nav" id="nav" aria-label="Main">
+        <a href="/projects/" aria-current="page"><span lang="en">Projects</span><span lang="tr">Projeler</span></a>
+        <a href="/notes/"><span lang="en">Notes</span><span lang="tr">Notlar</span></a>
+        <a href="/about/"><span lang="en">About</span><span lang="tr">Hakkımda</span></a>
+        <a href="/#contact"><span lang="en">Contact</span><span lang="tr">İletişim</span></a>
+      </nav>
+      <span class="switch" role="group" aria-label="Language / Dil"><a href="?lang=en" data-setlang="en" hreflang="en">EN</a><a href="?lang=tr" data-setlang="tr" hreflang="tr">TR</a></span>
+      <button class="theme" id="theme" type="button" aria-label="Toggle colour theme">theme</button>
+      <button class="theme menu-btn" id="menu" type="button" aria-expanded="false" aria-controls="nav">menu</button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <div class="page-head">
+    <div class="wrap">
+      <p class="crumbs"><a href="/projects/"><span lang="en">Projects</span><span lang="tr">Projeler</span></a> / IOT-02</p>
+      <p class="eyebrow"><span lang="en">IoT · remote control · relay output · data logging</span><span lang="tr">IoT · uzaktan kontrol · röle çıkışı · veri kaydı</span></p>
+      <h1><span lang="en">Telegram-controlled relay, Morse &amp; thermal log</span><span lang="tr">Telegram kontrollü röle, Mors ve sıcaklık kaydı</span></h1>
+      <p class="lede" lang="en">A Raspberry Pi that listens to a Telegram bot. A command from my phone switches a device's power through a relay module, and any text I send is played back as Morse code audio. A second script logs the Pi's CPU temperature next to the room temperature and draws comparison graphs.</p>
+      <p class="lede" lang="tr">Bir Telegram botunu dinleyen bir Raspberry Pi. Telefonumdan gönderdiğim bir komut, röle modülü üzerinden bir cihazın gücünü açıp kapatıyor; gönderdiğim her metin de Mors kodu sesi olarak çalınıyor. İkinci bir script de Pi'nin CPU sıcaklığını oda sıcaklığıyla birlikte kaydedip karşılaştırma grafikleri çiziyor.</p>
+      <div class="chain" aria-label="Signal chain"><span>Telegram</span><span class="arr">→</span><span>Bot API (HTTPS)</span><span class="arr">→</span><span>Raspberry Pi · Python</span><span class="arr">→</span><span>GPIO</span><span class="arr">→</span><span lang="en">relay module</span><span lang="tr">röle modülü</span><span class="arr">→</span><span lang="en">power / Morse audio</span><span lang="tr">güç / Mors sesi</span></div>
+    </div>
+  </div>
+
+  <section>
+    <div class="wrap narrow prose">
+      <div lang="en">
+        <h2>Why Telegram</h2>
+        <p>I wanted to control something at home from anywhere without opening ports on the router or writing a phone app. A Telegram bot solves both: the Pi asks Telegram's servers for new messages over normal outgoing HTTPS, so nothing has to reach the Pi from outside, and the chat window becomes the user interface for free.</p>
+        <h2>Commands</h2>
+        <div class="tscroll"><table class="t">
+          <tr><th>Message</th><th>What the Pi does</th></tr>
+          <tr><td><code>on</code> / <code>off</code></td><td>Sets the GPIO pin that drives the relay, which switches the load's power</td></tr>
+          <tr><td><code>morse &lt;text&gt;</code></td><td>Converts the text to dots and dashes and plays it through the relay-driven sounder</td></tr>
+          <tr><td><code>temp</code></td><td>Replies with the current CPU temperature</td></tr>
+        </table></div>
+        <p class="figcap" style="margin-top:-10px">The command names above are illustrative; the logic is the same.</p>
+        <p>A check on the chat ID makes sure that only my account can send commands. Without it, anyone who finds the bot's name could switch the relay.</p>
+      </div>
+      <div lang="tr">
+        <h2>Neden Telegram</h2>
+        <p>Evdeki bir şeyi, modemde port açmadan ya da bir telefon uygulaması yazmadan her yerden kontrol etmek istedim. Telegram botu ikisini birden çözüyor: Pi, normal giden HTTPS bağlantısıyla Telegram sunucularına yeni mesaj olup olmadığını soruyor, yani dışarıdan Pi'ye hiçbir şeyin ulaşması gerekmiyor; sohbet penceresi de bedavaya kullanıcı arayüzü oluyor.</p>
+        <h2>Komutlar</h2>
+        <div class="tscroll"><table class="t">
+          <tr><th>Mesaj</th><th>Pi ne yapıyor</th></tr>
+          <tr><td><code>on</code> / <code>off</code></td><td>Röleyi süren GPIO pinini ayarlıyor, röle de yükün gücünü açıp kapatıyor</td></tr>
+          <tr><td><code>morse &lt;metin&gt;</code></td><td>Metni nokta ve çizgilere çevirip röleyle sürülen ses elemanından çalıyor</td></tr>
+          <tr><td><code>temp</code></td><td>Anlık CPU sıcaklığıyla cevap veriyor</td></tr>
+        </table></div>
+        <p class="figcap" style="margin-top:-10px">Yukarıdaki komut adları örnek amaçlı; mantık aynı.</p>
+        <p>Sohbet kimliği (chat ID) kontrolü, komutları sadece benim hesabımın gönderebilmesini sağlıyor. Bu olmadan botun adını bulan herkes röleyi açıp kapatabilirdi.</p>
+      </div>
+
+      <figure class="figure" style="margin:4px 0 24px">
+        <svg viewBox="0 0 520 110" role="img" aria-label="The word SOS in Morse: three dots, three dashes, three dots, drawn as on and off periods of the relay.">
+          <g font-family="IBM Plex Mono, monospace" font-size="12" style="fill:var(--ink-3)"><text x="70" y="22" text-anchor="middle">S</text><text x="248" y="22" text-anchor="middle">O</text><text x="430" y="22" text-anchor="middle">S</text></g>
+          <path fill="none" style="stroke:var(--accent)" stroke-width="2" d="M10 80 H20 V44 H34 V80 H48 V44 H62 V80 H76 V44 H90 V80 H132 V44 H174 V80 H188 V44 H230 V80 H244 V44 H286 V80 H328 V44 H342 V80 H356 V44 H370 V80 H384 V44 H398 V80 H510"/>
+          <g font-family="IBM Plex Mono, monospace" font-size="10" style="fill:var(--ink-3)"><text x="27" y="98" text-anchor="middle">1</text><text x="111" y="98" text-anchor="middle">3</text><text x="153" y="98" text-anchor="middle">3</text></g>
+        </svg>
+        <figcaption class="figcap"><span lang="en">"SOS" as relay on/off periods. Dot = 1 unit, dash = 3, gap between letters = 3.</span><span lang="tr">Röle açık/kapalı süreleri olarak "SOS". Nokta = 1 birim, çizgi = 3, harfler arası boşluk = 3.</span></figcaption>
+      </figure>
+
+      <div lang="en">
+        <h2>Morse timing</h2>
+        <p>Morse is defined in units, not seconds: a dot is 1 unit on, a dash is 3, the gap inside a letter is 1 unit off, between letters 3 and between words 7. So the encoder is a lookup table plus one loop:</p>
+      </div>
+      <div lang="tr">
+        <h2>Mors zamanlaması</h2>
+        <p>Mors saniyeyle değil, birimle tanımlanıyor: nokta 1 birim açık, çizgi 3 birim; harf içindeki boşluk 1 birim kapalı, harfler arası 3, kelimeler arası 7. Yani kodlayıcı bir tablo ve tek bir döngüden ibaret:</p>
+      </div>
+      <pre><code>MORSE = {"A": ".-", "B": "-...", "O": "---", "S": "...", ...}
+UNIT = 0.12   <span class="cmt"># s</span>
+
+def play(text):
+    for ch in text.upper():
+        if ch == " ":
+            sleep(7 * UNIT); continue
+        for sym in MORSE.get(ch, ""):
+            relay.on();  sleep(UNIT if sym == "." else 3 * UNIT)
+            relay.off(); sleep(UNIT)
+        sleep(2 * UNIT)   <span class="cmt"># 1 + 2 = 3 units between letters</span></code></pre>
+
+      <div lang="en">
+        <h2>Relay wiring</h2>
+        <p>A GPIO pin gives 3.3 V and only a few milliamps, which is not enough for a relay coil, and the load side may carry much higher voltage. A relay module solves this with a transistor driver and a flyback diode on the board, so the Pi only drives a logic input. The load runs from its own supply and only shares the switching contact with the circuit. Before connecting anything I checked the module's input with a multimeter to see that it really switches at 3.3 V logic.</p>
+        <h2>Thermal logging</h2>
+        <p>The Pi reports its CPU temperature through the Linux thermal interface, in thousandths of a degree:</p>
+      </div>
+      <div lang="tr">
+        <h2>Röle bağlantısı</h2>
+        <p>Bir GPIO pini 3.3 V ve sadece birkaç miliamper veriyor; bu bir röle bobini için yetmiyor ve yük tarafında çok daha yüksek bir gerilim olabiliyor. Röle modülü bunu üzerindeki transistör sürücüsü ve flyback diyotuyla çözüyor; böylece Pi sadece bir lojik girişi sürüyor. Yük kendi kaynağından besleniyor ve devreyle sadece anahtarlama kontağını paylaşıyor. Herhangi bir şeyi bağlamadan önce modülün girişini multimetreyle kontrol edip 3.3 V lojikle gerçekten anahtarladığını gördüm.</p>
+        <h2>Sıcaklık kaydı</h2>
+        <p>Pi, CPU sıcaklığını Linux'un thermal arayüzü üzerinden derecenin binde biri cinsinden veriyor:</p>
+      </div>
+      <pre><code>def cpu_temp():
+    with open("/sys/class/thermal/thermal_zone0/temp") as f:
+        return int(f.read()) / 1000      <span class="cmt"># °C</span>
+
+<span class="cmt"># every N seconds: timestamp, cpu_temp(), room_temp  →  CSV  →  Matplotlib</span></code></pre>
+      <div lang="en">
+        <p>The script writes a timestamp, the CPU temperature and the room temperature to a CSV file at a fixed interval, and a Matplotlib script draws both curves on the same time axis. The interesting value is the difference between them: it shows how much the Pi heats itself above the room, how fast it rises when the bot is busy, and how slowly it cools down afterwards. It is a small, real example of thermal resistance and a thermal time constant.</p>
+        <h2>Concepts used</h2>
+        <p>REST APIs and long polling, authorisation by chat ID, GPIO output, relay drivers and flyback diodes, timing-based encoding, sysfs on Linux, CSV logging and plotting. See the <a href="/notes/">notes page</a>.</p>
+      </div>
+      <div lang="tr">
+        <p>Script, sabit aralıklarla zaman damgasını, CPU sıcaklığını ve oda sıcaklığını bir CSV dosyasına yazıyor; bir Matplotlib scripti de iki eğriyi aynı zaman ekseninde çiziyor. Asıl ilginç olan aralarındaki fark: Pi'nin kendini odanın ne kadar üstüne ısıttığını, bot meşgulken sıcaklığın ne kadar hızlı yükseldiğini ve sonra ne kadar yavaş soğuduğunu gösteriyor. Isıl direnç ve ısıl zaman sabitinin küçük ama gerçek bir örneği.</p>
+        <h2>Kullanılan kavramlar</h2>
+        <p>REST API ve long polling, chat ID ile yetkilendirme, GPIO çıkışı, röle sürücüleri ve flyback diyotları, zamanlamaya dayalı kodlama, Linux'ta sysfs, CSV kaydı ve grafik çizimi. <a href="/notes/">Notlar sayfasına</a> bakabilirsiniz.</p>
+      </div>
+
+      <div class="next" style="margin-top:40px">
+        <a href="/projects/ble-display/"><small>← IOT-01</small><span lang="en">ESP32 notification display</span><span lang="tr">ESP32 bildirim ekranı</span></a>
+        <a href="/projects/"><small>→</small><span lang="en">All projects</span><span lang="tr">Tüm projeler</span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="year">2026</span> Atahan Güney</span>
+    <span class="rev">rev E · 2026-11 · <a href="https://github.com/atahanguney/atahanguney.github.io"><span lang="en">site source</span><span lang="tr">site kaynak kodu</span></a></span>
+  </div>
+</footer>
+<script src="/assets/site.js" defer></script>
+</body>
+</html>

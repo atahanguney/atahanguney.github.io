@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en"
+  data-title-en="SerialScope · how it works · Atahan Güney"
+  data-title-tr="SerialScope · nasıl çalışıyor · Atahan Güney"
+  data-desc-en="How SerialScope works: a Python desktop tool for UART telemetry with a real-time EMA low-pass filter, two-way commands to the microcontroller and a virtual MCU mode."
+  data-desc-tr="SerialScope nasıl çalışıyor: gerçek zamanlı EMA alçak geçiren filtresi, mikrodenetleyiciye çift yönlü komutları ve sanal MCU modu olan, UART telemetrisi için bir Python masaüstü aracı.">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>(function(){var d=document.documentElement,l=null,t=null;try{l=new URLSearchParams(location.search).get('lang')||localStorage.getItem('lang');t=localStorage.getItem('theme')}catch(e){}if(l==='tr'){d.setAttribute('data-lang','tr');d.lang='tr'}if(t)d.setAttribute('data-theme',t)})()</script>
+<title>SerialScope · how it works · Atahan Güney</title>
+<meta name="description" content="How SerialScope works: a Python desktop tool for UART telemetry with a real-time EMA low-pass filter, two-way commands to the microcontroller and a virtual MCU mode.">
+<meta name="author" content="Atahan Güney">
+<meta name="theme-color" content="#1f4e79">
+<link rel="canonical" href="https://atahanguney.github.io/projects/serialscope/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SerialScope · how it works">
+<meta property="og:description" content="UART telemetry, a real-time EMA filter and two-way control for microcontroller labs.">
+<meta property="og:url" content="https://atahanguney.github.io/projects/serialscope/">
+<meta property="og:image" content="https://atahanguney.github.io/assets/serialscope.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{ "@context": "https://schema.org", "@type": "SoftwareSourceCode", "name": "SerialScope", "programmingLanguage": "Python", "codeRepository": "https://github.com/atahanguney/SerialScope", "author": { "@type": "Person", "name": "Atahan Güney", "url": "https://atahanguney.github.io/" } }
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap">
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main"><span lang="en">Skip to content</span><span lang="tr">İçeriğe geç</span></a>
+<header class="top">
+  <div class="wrap">
+    <a class="mark" href="/" aria-label="Atahan Güney">
+      <svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="5" fill="#1f4e79"/><path d="M5 16c2.75-7 8.25-7 11 0s8.25 7 11 0" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round"/><path d="M5 16c2.75 4.2 8.25 4.2 11 0s8.25-4.2 11 0" stroke="#e57368" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg>
+      <span>Atahan Güney</span><small>EEE</small>
+    </a>
+    <div class="right">
+      <nav class="nav" id="nav" aria-label="Main">
+        <a href="/projects/" aria-current="page"><span lang="en">Projects</span><span lang="tr">Projeler</span></a>
+        <a href="/notes/"><span lang="en">Notes</span><span lang="tr">Notlar</span></a>
+        <a href="/about/"><span lang="en">About</span><span lang="tr">Hakkımda</span></a>
+        <a href="/#contact"><span lang="en">Contact</span><span lang="tr">İletişim</span></a>
+      </nav>
+      <span class="switch" role="group" aria-label="Language / Dil"><a href="?lang=en" data-setlang="en" hreflang="en">EN</a><a href="?lang=tr" data-setlang="tr" hreflang="tr">TR</a></span>
+      <button class="theme" id="theme" type="button" aria-label="Toggle colour theme">theme</button>
+      <button class="theme menu-btn" id="menu" type="button" aria-expanded="false" aria-controls="nav">menu</button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <div class="page-head">
+    <div class="wrap">
+      <p class="crumbs"><a href="/projects/"><span lang="en">Projects</span><span lang="tr">Projeler</span></a> / SW-02</p>
+      <p class="eyebrow"><span lang="en">Desktop tool · UART telemetry &amp; DSP</span><span lang="tr">Masaüstü aracı · UART telemetrisi ve DSP</span></p>
+      <h1>SerialScope</h1>
+      <p class="lede" lang="en">A Python desktop tool for microcontroller labs. It plots incoming UART data live, filters it in real time with an adjustable low-pass filter, and sends new parameters back to the board while the board keeps streaming.</p>
+      <p class="lede" lang="tr">Mikrodenetleyici laboratuvarları için bir Python masaüstü aracı. Gelen UART verisini canlı çiziyor, ayarlanabilir bir alçak geçiren filtreyle gerçek zamanlı filtreliyor ve kart veri göndermeye devam ederken ona yeni parametreler yolluyor.</p>
+      <div class="cta">
+        <a class="btn primary" href="https://github.com/atahanguney/SerialScope"><span lang="en">Source on GitHub</span><span lang="tr">GitHub'da kaynak kod</span></a>
+      </div>
+      <div class="chips"><span class="chip">Python 3</span><span class="chip">PySerial</span><span class="chip">Tkinter / ttk</span><span class="chip">Matplotlib</span><span class="chip">threading</span><span class="chip">collections.deque</span><span class="chip">Arduino · ESP32 · STM32</span></div>
+    </div>
+  </div>
+
+  <section>
+    <div class="wrap article">
+      <nav class="toc" aria-label="On this page">
+        <div lang="en"><a href="#problem">The problem</a><a href="#shot">Screenshot</a><a href="#arch">Architecture</a><a href="#ema">The EMA filter</a><a href="#protocol">Protocol</a><a href="#virtual">Virtual MCU</a><a href="#learned">What I learned</a></div>
+        <div lang="tr"><a href="#tr-problem">Problem</a><a href="#tr-shot">Ekran görüntüsü</a><a href="#tr-arch">Mimari</a><a href="#tr-ema">EMA filtresi</a><a href="#tr-protocol">Protokol</a><a href="#tr-virtual">Sanal MCU</a><a href="#tr-learned">Ne öğrendim</a></div>
+      </nav>
+
+      <div class="prose">
+        <div lang="en">
+          <h2 id="problem">The problem</h2>
+          <p>In the microcontroller labs the sensor readings were noisy, and the loop for trying a new filter was slow: change a constant in the C code, compile, flash, open the serial monitor, squint at the numbers. Changing a PID setpoint meant the same loop again. The Arduino serial plotter shows the data but can't filter it, export it or send anything back.</p>
+          <p>The idea behind SerialScope was simple: keep the firmware dumb, let it stream raw values and accept a few text commands, and do the filtering, plotting and tuning on the PC where changing a number takes a second.</p>
+        </div>
+        <div lang="tr">
+          <h2 id="tr-problem">Problem</h2>
+          <p>Mikrodenetleyici laboratuvarlarında sensör okumaları gürültülüydü ve yeni bir filtreyi denemenin döngüsü yavaştı: C kodunda bir sabiti değiştir, derle, karta yükle, seri monitörü aç, sayılara göz kısarak bak. Bir PID ayar noktasını değiştirmek de aynı döngü demekti. Arduino'nun seri çizicisi veriyi gösteriyor ama filtreleyemiyor, dışa aktaramıyor ve karta bir şey gönderemiyor.</p>
+          <p>SerialScope'un arkasındaki fikir basitti: firmware'i sade tut, ham değerleri göndersin ve birkaç metin komutunu kabul etsin; filtreleme, çizim ve ayarlamayı ise bir sayıyı değiştirmenin bir saniye sürdüğü PC tarafında yap.</p>
+        </div>
+
+        <div id="shot">
+          <div class="shot">
+            <picture>
+              <source srcset="/assets/serialscope.webp" type="image/webp">
+              <img src="/assets/serialscope.jpg" width="1238" height="766" loading="lazy" decoding="async" alt="SerialScope window: connection and DSP controls on the left, a live plot of a noisy raw signal, its EMA-filtered version and a reference channel in the centre, tuning sliders and a UART monitor on the right.">
+            </picture>
+          </div>
+          <p class="figcap"><span lang="en">Simulation mode: raw CH1, EMA-filtered CH1 and the CH2 reference.</span><span lang="tr">Simülasyon modu: ham CH1, EMA ile filtrelenmiş CH1 ve CH2 referansı.</span></p>
+        </div>
+
+        <div lang="en">
+          <h2 id="arch">Architecture</h2>
+          <div class="chain" aria-label="Data flow"><span>MCU</span><span class="arr">→ UART →</span><span>reader thread</span><span class="arr">→</span><span>deque buffer</span><span class="arr">→</span><span>Tk main loop</span><span class="arr">→</span><span>EMA + plot + CSV</span></div>
+          <p>The main design problem in a tool like this is that reading the serial port blocks, and Tkinter must only be touched from its own thread. If you read the port inside the GUI loop, the window freezes; if you update the GUI from the reader thread, it crashes at random.</p>
+          <p>So SerialScope uses a producer–consumer setup. A background thread does nothing except read lines from PySerial, parse them and append them to a fixed-length <code>collections.deque</code>. The Tk main loop wakes up on a timer, takes what is in the buffer, applies the filter and redraws the Matplotlib plot. Because the deque has a maximum length, old samples fall off the end on their own and memory use stays flat no matter how long the session runs.</p>
+          <p>Commands go the other way: sliders and macro buttons write short ASCII lines to the same port.</p>
+        </div>
+        <div lang="tr">
+          <h2 id="tr-arch">Mimari</h2>
+          <div class="chain" aria-label="Veri akışı"><span>MCU</span><span class="arr">→ UART →</span><span>okuyucu thread</span><span class="arr">→</span><span>deque tamponu</span><span class="arr">→</span><span>Tk ana döngüsü</span><span class="arr">→</span><span>EMA + grafik + CSV</span></div>
+          <p>Bu tür bir araçtaki asıl tasarım problemi şu: seri portu okumak bloklayan bir işlem, Tkinter'a ise sadece kendi thread'inden dokunulmalı. Portu GUI döngüsünün içinde okursanız pencere donuyor; GUI'yi okuyucu thread'den güncellerseniz rastgele çöküyor.</p>
+          <p>Bu yüzden SerialScope üretici-tüketici yapısı kullanıyor. Arka plandaki bir thread sadece PySerial'den satır okuyor, ayrıştırıyor ve sabit uzunluklu bir <code>collections.deque</code>'ya ekliyor. Tk ana döngüsü bir zamanlayıcıyla uyanıyor, tamponda ne varsa alıyor, filtreyi uyguluyor ve Matplotlib grafiğini yeniden çiziyor. Deque'nun bir maksimum uzunluğu olduğu için eski örnekler kendiliğinden düşüyor ve oturum ne kadar uzun sürerse sürsün bellek kullanımı sabit kalıyor.</p>
+          <p>Komutlar ters yönde gidiyor: kaydırıcılar ve makro butonları aynı porta kısa ASCII satırları yazıyor.</p>
+        </div>
+
+        <div lang="en">
+          <h2 id="ema">The EMA low-pass filter</h2>
+          <p>The filter is an exponential moving average, which is the discrete version of a first-order RC low-pass:</p>
+          <pre><code>y[n] = α·x[n] + (1 − α)·y[n−1]        0 &lt; α ≤ 1</code></pre>
+          <p>It needs one multiply-add per sample and one stored value, which is why it is so common on microcontrollers. A small α means heavy smoothing and more lag; α = 1 means no filtering at all. Comparing it with an RC circuit gives a time constant of τ = T<sub>s</sub>(1 − α)/α, so the cut-off frequency is roughly</p>
+          <pre><code>f_c ≈ α·f_s / (2π(1 − α))       <span class="cmt"># ≈ α·f_s / 2π for small α</span></code></pre>
+          <p>In the app, α is a slider and the raw and filtered signals are drawn on the same axes. Seeing the lag grow while the noise shrinks taught me more about the trade-off than the formula did.</p>
+        </div>
+        <div lang="tr">
+          <h2 id="tr-ema">EMA alçak geçiren filtresi</h2>
+          <p>Filtre, birinci dereceden RC alçak geçiren filtrenin ayrık hali olan üstel hareketli ortalama:</p>
+          <pre><code>y[n] = α·x[n] + (1 − α)·y[n−1]        0 &lt; α ≤ 1</code></pre>
+          <p>Örnek başına bir çarpma-toplama ve saklanan tek bir değer istiyor; mikrodenetleyicilerde bu kadar yaygın olmasının sebebi de bu. Küçük α daha güçlü yumuşatma ve daha fazla gecikme demek; α = 1 ise hiç filtreleme yok demek. Bir RC devresiyle karşılaştırınca zaman sabiti τ = T<sub>s</sub>(1 − α)/α çıkıyor, yani kesim frekansı yaklaşık olarak</p>
+          <pre><code>f_c ≈ α·f_s / (2π(1 − α))       <span class="cmt"># küçük α için ≈ α·f_s / 2π</span></code></pre>
+          <p>Uygulamada α bir kaydırıcı ve ham sinyal ile filtrelenmiş sinyal aynı eksende çiziliyor. Gürültü azalırken gecikmenin arttığını gözle görmek, bu ödünleşimi bana formülden daha iyi öğretti.</p>
+        </div>
+
+        <div lang="en">
+          <h2 id="protocol">The protocol</h2>
+          <p>I kept the protocol as plain text on purpose. It can be typed by hand in any serial terminal, read in a log, and parsed on the board with a few lines of C.</p>
+          <div class="tscroll"><table class="t">
+            <tr><th>Direction</th><th>Format</th><th>Example</th></tr>
+            <tr><td>MCU → PC</td><td>comma-separated values, one line per sample</td><td><code>25.40,22.10</code></td></tr>
+            <tr><td>PC → MCU</td><td><code>KEY:value</code></td><td><code>SETPOINT:25.0</code>, <code>GAIN:5.0</code></td></tr>
+            <tr><td>PC → MCU</td><td>commands</td><td><code>CMD:ESTOP</code></td></tr>
+          </table></div>
+          <p>A minimal board-side loop for an Arduino looks like this (illustrative):</p>
+          <pre><code>void loop() {
+  float raw = analogRead(A0) * (5.0 / 1023.0);
+  Serial.print(raw); Serial.print(','); Serial.println(setpoint);
+  if (Serial.available()) {
+    String line = Serial.readStringUntil('\n');
+    if (line.startsWith("SETPOINT:")) setpoint = line.substring(9).toFloat();
+  }
+  delay(20);   <span class="cmt">// ~50 samples per second</span>
+}</code></pre>
+        </div>
+        <div lang="tr">
+          <h2 id="tr-protocol">Protokol</h2>
+          <p>Protokolü bilerek düz metin olarak tuttum. Herhangi bir seri terminalde elle yazılabiliyor, log'da okunabiliyor ve kartta birkaç satır C ile ayrıştırılabiliyor.</p>
+          <div class="tscroll"><table class="t">
+            <tr><th>Yön</th><th>Biçim</th><th>Örnek</th></tr>
+            <tr><td>MCU → PC</td><td>virgülle ayrılmış değerler, her örnek bir satır</td><td><code>25.40,22.10</code></td></tr>
+            <tr><td>PC → MCU</td><td><code>ANAHTAR:değer</code></td><td><code>SETPOINT:25.0</code>, <code>GAIN:5.0</code></td></tr>
+            <tr><td>PC → MCU</td><td>komutlar</td><td><code>CMD:ESTOP</code></td></tr>
+          </table></div>
+          <p>Bir Arduino için en basit kart tarafı döngüsü şöyle görünüyor (örnek amaçlı):</p>
+          <pre><code>void loop() {
+  float raw = analogRead(A0) * (5.0 / 1023.0);
+  Serial.print(raw); Serial.print(','); Serial.println(setpoint);
+  if (Serial.available()) {
+    String line = Serial.readStringUntil('\n');
+    if (line.startsWith("SETPOINT:")) setpoint = line.substring(9).toFloat();
+  }
+  delay(20);   <span class="cmt">// saniyede ~50 örnek</span>
+}</code></pre>
+        </div>
+
+        <div lang="en">
+          <h2 id="virtual">Virtual MCU mode</h2>
+          <p>There is a built-in simulator that produces a noisy sensor signal and reacts to the same commands. I added it for two reasons: I wanted to work on the tool without a board on the desk, and I wanted anyone who downloads it to see what it does in ten seconds. It also turned out to be useful for testing, because the simulated signal is known, so I can check that the filtered output looks the way the formula says it should.</p>
+          <h2 id="learned">What I learned</h2>
+          <ul>
+            <li>Threads and GUIs: one thread owns the GUI, everything else talks to it through a queue or buffer.</li>
+            <li>A bounded buffer is the easiest way to make a long-running tool not leak memory.</li>
+            <li>Plain-text protocols cost a few extra bytes but save hours of debugging.</li>
+            <li>Simple filters are worth understanding fully before reaching for complex ones. An EMA with the right α solved most of the noise problems I had in the labs.</li>
+          </ul>
+        </div>
+        <div lang="tr">
+          <h2 id="tr-virtual">Sanal MCU modu</h2>
+          <p>Gürültülü bir sensör sinyali üreten ve aynı komutlara tepki veren yerleşik bir simülatör var. Bunu iki sebeple ekledim: masada kart olmadan da araç üzerinde çalışabilmek istedim ve indiren herkesin aracın ne yaptığını on saniyede görebilmesini istedim. Test için de faydalı oldu, çünkü simüle edilen sinyal bilindiği için filtrelenmiş çıktının formülün söylediği gibi görünüp görünmediğini kontrol edebiliyorum.</p>
+          <h2 id="tr-learned">Ne öğrendim</h2>
+          <ul>
+            <li>Thread'ler ve arayüzler: arayüzün sahibi tek bir thread'dir, diğer her şey onunla bir kuyruk ya da tampon üzerinden konuşur.</li>
+            <li>Uzun süre çalışan bir aracın bellek sızdırmaması için en kolay yol sınırlı bir tampon kullanmak.</li>
+            <li>Düz metin protokoller birkaç byte fazlaya mal oluyor ama saatlerce hata ayıklamaktan kurtarıyor.</li>
+            <li>Karmaşık filtrelere geçmeden önce basit olanları tam olarak anlamak gerekiyor. Doğru α değeriyle bir EMA, laboratuvarlarda yaşadığım gürültü problemlerinin çoğunu çözdü.</li>
+          </ul>
+        </div>
+
+        <div class="next" style="margin-top:40px">
+          <a href="/projects/electrofield/"><small>← SW-01</small>ElectroField</a>
+          <a href="/projects/drowsiness/"><small>→ CV-01</small><span lang="en">Drowsiness detection</span><span lang="tr">Yorgunluk tespiti</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="year">2026</span> Atahan Güney</span>
+    <span class="rev">rev E · 2026-11 · <a href="https://github.com/atahanguney/atahanguney.github.io"><span lang="en">site source</span><span lang="tr">site kaynak kodu</span></a></span>
+  </div>
+</footer>
+<script src="/assets/site.js" defer></script>
+</body>
+</html>

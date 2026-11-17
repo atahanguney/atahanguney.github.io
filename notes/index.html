@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en"
+  data-title-en="Notes · concepts behind the projects · Atahan Güney"
+  data-title-tr="Notlar · projelerin arkasındaki kavramlar · Atahan Güney"
+  data-desc-en="Short notes on the electromagnetics, signal processing, embedded and software concepts used in Atahan Güney's projects: skin depth, reflection coefficient, EMA filters, UART, I2C, BLE GATT and more."
+  data-desc-tr="Atahan Güney'in projelerinde kullanılan elektromanyetik, sinyal işleme, gömülü sistem ve yazılım kavramları üzerine kısa notlar: deri kalınlığı, yansıma katsayısı, EMA filtresi, UART, I2C, BLE GATT ve daha fazlası.">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>(function(){var d=document.documentElement,l=null,t=null;try{l=new URLSearchParams(location.search).get('lang')||localStorage.getItem('lang');t=localStorage.getItem('theme')}catch(e){}if(l==='tr'){d.setAttribute('data-lang','tr');d.lang='tr'}if(t)d.setAttribute('data-theme',t)})()</script>
+<title>Notes · concepts behind the projects · Atahan Güney</title>
+<meta name="description" content="Short notes on the electromagnetics, signal processing, embedded and software concepts used in Atahan Güney's projects: skin depth, reflection coefficient, EMA filters, UART, I2C, BLE GATT and more.">
+<meta name="author" content="Atahan Güney">
+<meta name="theme-color" content="#1f4e79">
+<link rel="canonical" href="https://atahanguney.github.io/notes/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:title" content="Notes · concepts behind the projects">
+<meta property="og:url" content="https://atahanguney.github.io/notes/">
+<meta property="og:image" content="https://atahanguney.github.io/assets/og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap">
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main"><span lang="en">Skip to content</span><span lang="tr">İçeriğe geç</span></a>
+<header class="top">
+  <div class="wrap">
+    <a class="mark" href="/" aria-label="Atahan Güney">
+      <svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="5" fill="#1f4e79"/><path d="M5 16c2.75-7 8.25-7 11 0s8.25 7 11 0" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round"/><path d="M5 16c2.75 4.2 8.25 4.2 11 0s8.25-4.2 11 0" stroke="#e57368" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg>
+      <span>Atahan Güney</span><small>EEE</small>
+    </a>
+    <div class="right">
+      <nav class="nav" id="nav" aria-label="Main">
+        <a href="/projects/"><span lang="en">Projects</span><span lang="tr">Projeler</span></a>
+        <a href="/notes/" aria-current="page"><span lang="en">Notes</span><span lang="tr">Notlar</span></a>
+        <a href="/about/"><span lang="en">About</span><span lang="tr">Hakkımda</span></a>
+        <a href="/#contact"><span lang="en">Contact</span><span lang="tr">İletişim</span></a>
+      </nav>
+      <span class="switch" role="group" aria-label="Language / Dil"><a href="?lang=en" data-setlang="en" hreflang="en">EN</a><a href="?lang=tr" data-setlang="tr" hreflang="tr">TR</a></span>
+      <button class="theme" id="theme" type="button" aria-label="Toggle colour theme">theme</button>
+      <button class="theme menu-btn" id="menu" type="button" aria-expanded="false" aria-controls="nav">menu</button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <div class="page-head">
+    <div class="wrap">
+      <p class="eyebrow"><span lang="en">Lab notebook</span><span lang="tr">Laboratuvar defteri</span></p>
+      <h1><span lang="en">Notes</span><span lang="tr">Notlar</span></h1>
+      <p class="lede" lang="en">The concepts I had to understand properly to build the projects on this site, written the way I would explain them to a classmate. Each note says where I used it.</p>
+      <p class="lede" lang="tr">Bu sitedeki projeleri yapabilmek için düzgünce anlamam gereken kavramlar; bir sınıf arkadaşıma anlatır gibi yazdım. Her notta onu nerede kullandığım da yazıyor.</p>
+    </div>
+  </div>
+
+  <section>
+    <div class="wrap">
+      <div class="filter" role="group" aria-label="Filter">
+        <button type="button" data-f="all" aria-pressed="true"><span lang="en">all</span><span lang="tr">hepsi</span></button>
+        <button type="button" data-f="em" aria-pressed="false"><span lang="en">electromagnetics</span><span lang="tr">elektromanyetik</span></button>
+        <button type="button" data-f="sig" aria-pressed="false"><span lang="en">signals</span><span lang="tr">sinyaller</span></button>
+        <button type="button" data-f="cv" aria-pressed="false"><span lang="en">vision</span><span lang="tr">görüntü</span></button>
+        <button type="button" data-f="emb" aria-pressed="false"><span lang="en">embedded</span><span lang="tr">gömülü</span></button>
+        <button type="button" data-f="sw" aria-pressed="false"><span lang="en">software</span><span lang="tr">yazılım</span></button>
+      </div>
+
+      <div class="concepts">
+        <!-- electromagnetics -->
+        <article class="concept" data-area="em">
+          <p class="eyebrow">EM</p>
+          <h3><span lang="en">Skin depth</span><span lang="tr">Deri kalınlığı (skin depth)</span></h3>
+          <span class="eq">δ = 1 / √(π f μ σ)</span>
+          <p lang="en">In a good conductor an AC field decays exponentially with depth; δ is where it drops to 1/e. In copper at 50 Hz it is about 9 mm, at 1 GHz about 2 µm, which is why high-frequency current only uses the surface of a wire.</p>
+          <p lang="tr">İyi bir iletkende AC alan derinlikle üstel olarak sönümlenir; δ, alanın 1/e'ye düştüğü derinliktir. Bakırda 50 Hz'te yaklaşık 9 mm, 1 GHz'te ise yaklaşık 2 µm'dir. Yüksek frekanslı akımın telin sadece yüzeyini kullanmasının sebebi bu.</p>
+          <p class="used"><span lang="en">used in</span><span lang="tr">kullanıldığı yer</span>: <a href="/projects/electrofield/">ElectroField</a></p>
+        </article>
+        <article class="concept" data-area="em">
+          <p class="eyebrow">EM</p>
+          <h3><span lang="en">Propagation constant</span><span lang="tr">Yayılma sabiti</span></h3>
+          <span class="eq">γ = α + jβ = √(jωμ(σ + jωε))</span>
+          <p lang="en">α tells how fast a wave loses amplitude (Np/m), β how fast its phase turns (rad/m). Picking the root with α ≥ 0 is what makes the wave decay instead of grow, a detail that is easy to get wrong in code.</p>
+          <p lang="tr">α dalganın genliğini ne kadar hızlı kaybettiğini (Np/m), β ise fazının ne kadar hızlı döndüğünü (rad/m) söyler. Dalganın büyümek yerine sönümlenmesini sağlayan, α ≥ 0 olan kökü seçmektir; kodda kolayca yanlış yapılabilen bir detay.</p>
+          <p class="used"><span lang="en">used in</span><span lang="tr">kullanıldığı yer</span>: <a href="/projects/electrofield/">ElectroField</a></p>
+        </article>
+        <article class="concept" data-area="em">
+          <p class="eyebrow">EM</p>
+          <h3><span lang="en">Reflection coefficient &amp; VSWR</span><span lang="tr">Yansıma katsayısı ve VSWR</span></h3>
+          <span class="eq">Γ = (Z<sub>L</sub> − Z<sub>0</sub>) / (Z<sub>L</sub> + Z<sub>0</sub>) · S = (1 + |Γ|) / (1 − |Γ|)</span>
+          <p lang="en">If the load does not match the line, part of the wave comes back and forms a standing wave. Γ = 0 means a perfect match, |Γ| = 1 means everything is reflected (short, open or pure reactance).</p>
+          <p lang="tr">Yük hatla uyumlu değilse dalganın bir kısmı geri döner ve duran dalga oluşturur. Γ = 0 mükemmel uyum, |Γ| = 1 ise her şeyin yansıması demektir (kısa devre, açık devre ya da saf reaktans).</p>
+          <p class="used"><span lang="en">used in</span><span lang="tr">kullanıldığı yer</span>: <a href="/projects/electrofield/">ElectroField</a>, <span lang="en">and the 404 page</span><span lang="tr">ve 404 sayfası</span></p>
+        </article>
+        <article class="concept" data-area="em">
+          <p class="eyebrow">EM</p>
+          <h3><span lang="en">Input impedance of a line</span><span lang="tr">Hattın giriş empedansı</span></h3>
+          <span class="eq">Z<sub>in</sub> = Z<sub>0</sub> (Z<sub>L</sub> + jZ<sub>0</sub> tan βl) / (Z<sub>0</sub> + jZ<sub>L</sub> tan βl)</span>
+          <p lang="en">A piece of line transforms the load impedance. A quarter-wave line (βl = π/2) turns Z<sub>L</sub> into Z<sub>0</sub>²/Z<sub>L</sub>, so a short becomes an open. This is a good test case because the answer is known.</p>
+          <p lang="tr">Bir hat parçası yük empedansını dönüştürür. Çeyrek dalga boyu bir hat (βl = π/2), Z<sub>L</sub>'yi Z<sub>0</sub>²/Z<sub>L</sub>'ye çevirir; yani kısa devre açık devre olur. Cevabı bilindiği için iyi bir test durumu.</p>
+          <p class="used"><span lang="en">used in</span><span lang="tr">kullanıldığı yer</span>: <a href="/projects/electrofield/">ElectroField</a></p>
+        </article>
+        <article class="concept" data-area="em">
+          <p class="eyebrow">EM</p>
+          <h3><span lang="en">Poynting vector</span><span lang="tr">Poynting vektörü</span></h3>
+          <span class="eq">S = E × H · ⟨S⟩ = ½ Re{E × H*}</span>
+          <p lang="en">The direction and density of power flow (W/m²). For a plane wave it points along the propagation direction, which is the arrow in the figure on the home page.</p>
+          <p lang="tr">Güç akışının yönü ve yoğunluğu (W/m²). Düzlem dalga için yayılma yönünü gösterir; ana sayfadaki şekilde gördüğünüz ok bu.</p>
+          <p class="used"><span lang="en">used in</span><span lang="tr">kullanıldığı yer</span>: <a href="/projects/electrofield/">ElectroField</a></p>
+        </article>
+        <article class="concept" data-area="em">
+          <p class="eyebrow">EM</p>
+          <h3><span lang="en">Waveguide cut-off</span><span lang="tr">Dalga kılavuzunda kesim frekansı</span></h3>
+          <span class="eq">f<sub>c,mn</sub> = (u<sub>p</sub>/2) √((m/a)² + (n/b)²)</span>
+          <p lang="en">A rectangular guide only carries a mode above its cut-off frequency. Below it the field is evanescent and dies out within a short distance. TE₁₀ has the lowest cut-off, f<sub>c</sub> = u<sub>p</sub>/2a.</p>
+          <p lang="tr">Dikdörtgen bir dalga kılavuzu bir modu sadece kesim frekansının üstünde taşır. Altında alan sönümlenen (evanescent) bir alandır ve kısa bir mesafede kaybolur. En düşük kesim frekansı TE₁₀ modundadır: f<sub>c</sub> = u<sub>p</sub>/2a.</p>
+          <p class="used"><span lang="en">used in</span><span lang="tr">kullanıldığı yer</span>: <a href="/projects/electrofield/">ElectroField</a></p>
+        </article>
+
+        <!-- signals -->
+        <article class="concept" data-area="sig">
+          <p class="eyebrow">DSP</p>
+          <h3><span lang="en">Exponential moving average</span><span lang="tr">Üstel hareketli ortalama (EMA)</span></h3>
+          <span class="eq">y[n] = α x[n] + (1 − α) y[n−1]</span>
+          <p lang="en">A first-order IIR low-pass with one multiply-add per sample. Smaller α means smoother output and more lag. Its time constant is τ = T<sub>s</sub>(1 − α)/α.</p>
+          <p lang="tr">Örnek başına bir çarpma-toplama yapan birinci dereceden bir IIR alçak geçiren filtre. Küçük α daha yumuşak çıktı ve daha fazla gecikme demek. Zaman sabiti τ = T<sub>s</sub>(1 − α)/α.</p>
+          <p class="used"><span lang="en">used in</span><span lang="tr">kullanıldığı yer</span>: <a href="/projects/serialscope/">SerialScope</a></p>
+        </article>
+        <article class="concept" data-area="sig">
+          <p class="eyebrow">DSP</p>
+          <h3><span lang="en">Sampling &amp; aliasing</span><span lang="tr">Örnekleme ve örtüşme (aliasing)</span></h3>
+          <span class="eq">f<sub>s</sub> &gt; 2 f<sub>max</sub></span>
+          <p lang="en">If a signal has content above f<sub>s</sub>/2, it shows up as a false lower frequency after sampling, and no filter in software can remove it afterwards. The fix has to come before the ADC.</p>
+          <p lang="tr">Bir sinyalin f<sub>s</sub>/2'nin üstünde bileşeni varsa, örneklemeden sonra sahte ve daha düşük bir frekans olarak görünür ve sonradan hiçbir yazılım filtresi bunu temizleyemez. Çözüm ADC'den önce gelmeli.</p>
+          <p class="used"><span lang="en">used in</span><span lang="tr">kullanıldığı yer</span>: <a href="/projects/serialscope/">SerialScope</a></p>
+        </article>
+        <article class="concept" data-area="sig">
+          <p class="eyebrow">DSP</p>
+          <h3><span lang="en">RC low-pass</span><span lang="tr">RC alçak geçiren filtre</span></h3>
+          <span class="eq">f<sub>c</sub> = 1 / (2π R C)</span>
+          <p lang="en">The analogue cousin of the EMA. At f<sub>c</sub> the output is −3 dB, and above it the gain falls by 20 dB per decade. Easy to check in LTspice before building it.</p>
+          <p lang="tr">EMA'nın analog akrabası. f<sub>c</sub>'de çıkış −3 dB'dir, üstünde kazanç dekad başına 20 dB düşer. Kurmadan önce LTspice'ta kontrol etmesi kolay.</p>
+          <p class="used"><span lang="en">used in</span><span lang="tr">kullanıldığı yer</span>: <span lang="en">labs, LTspice</span><span lang="tr">laboratuvarlar, LTspice</span></p>
+        </article>
+        <article class="concept" data-area="sig">
+          <p class="eyebrow">ADC</p>
+          <h3><span lang="en">ADC resolution</span><span lang="tr">ADC çözünürlüğü</span></h3>
+          <span class="eq">LSB = V<sub>ref</sub> / 2<sup>N</sup></span>
+          <p lang="en">A 12-bit ADC with a 3.3 V reference has steps of about 0.8 mV. Any error in V<sub>ref</sub> scales every reading, which matters a lot for small signals such as an on-chip temperature sensor.</p>
+          <p lang="tr">3.3 V referanslı 12 bitlik bir ADC'nin adımları yaklaşık 0.8 mV'tur. V<sub>ref</sub>'teki her hata bütün okumaları ölçekler; bu da çip içi sıcaklık sensörü gibi küçük sinyallerde çok önemlidir.</p>
+          <p class="used"><span lang="en">used in</span><span lang="tr">kullanıldığı yer</span>: <span lang="en">Pico 2W, sensor readings</span><span lang="tr">Pico 2W, sensör okumaları</span></p>
+        </article>
+
+        <!-- vision -->
+        <article class="concept" data-area="cv">
+          <p class="eyebrow">CV</p>
+          <h3><span lang="en">Eye Aspect Ratio</span><span lang="tr">Göz En-Boy Oranı (EAR)</span></h3>
+          <span class="eq">EAR = (‖p2−p6‖ + ‖p3−p5‖) / 2‖p1−p4‖</span>
+          <p lang="en">Eye height over eye width from six landmarks. Because it is a ratio, it does not care how far the face is from the camera. It drops towards zero when the eye closes.</p>
+          <p lang="tr">Altı noktadan elde edilen göz yüksekliğinin göz genişliğine oranı. Oran olduğu için yüzün kameraya uzaklığını umursamıyor. Göz kapanınca sıfıra doğru düşüyor.</p>
+          <p class="used"><span lang="en">used in</span><span lang="tr">kullanıldığı yer</span>: <a href="/projects/drowsiness/">CV-01</a></p>
+        </article>
+        <article class="concept" data-area="cv">
+          <p class="eyebrow">CV</p>
+          <h3><span lang="en">Debouncing a detector</span><span lang="tr">Bir algılayıcıyı kararlı hale getirmek</span></h3>
+          <span class="eq">alert ⇔ x &lt; thr for N consecutive frames</span>
+          <p lang="en">A single frame can be wrong. Requiring the condition to hold for several frames in a row filters out blinks and detection glitches, the same idea as debouncing a push button.</p>
+          <p lang="tr">Tek bir kare yanlış olabilir. Koşulun art arda birkaç kare boyunca sağlanmasını istemek göz kırpmaları ve algılama hatalarını eliyor; bir butonun debounce edilmesiyle aynı fikir.</p>
+          <p class="used"><span lang="en">used in</span><span lang="tr">kullanıldığı yer</span>: <a href="/projects/drowsiness/">CV-01</a>, <a href="/projects/gesture-servo/">CV-02</a></p>
+        </article>
+        <article class="concept" data-area="cv">
+          <p class="eyebrow">CV</p>
+          <h3><span lang="en">Pixel to actuator mapping</span><span lang="tr">Pikselden eyleyiciye eşleme</span></h3>
+          <span class="eq">θ = x / W · 180°</span>
+          <p lang="en">A linear map from image coordinates to a physical range. Clamping the result and smoothing it keeps a jittery detection from shaking the motor.</p>
+          <p lang="tr">Görüntü koordinatlarından fiziksel bir aralığa doğrusal eşleme. Sonucu sınırlamak ve yumuşatmak, titreyen bir algılamanın motoru sallamasını engelliyor.</p>
+          <p class="used"><span lang="en">used in</span><span lang="tr">kullanıldığı yer</span>: <a href="/projects/gesture-servo/">CV-02</a></p>
+        </article>
+
+        <!-- embedded -->        <article class="concept" data-area="emb">
+          <p class="eyebrow">BUS</p>
+          <h3><span lang="en">UART framing</span><span lang="tr">UART çerçeveleme</span></h3>
+          <span class="eq">8N1 → 10 bits/byte · 115200 baud ≈ 11.5 kB/s</span>
+          <p lang="en">Each byte is sent with a start and a stop bit, so the real throughput is baud/10. UART has no idea of messages, only bytes; a newline or another delimiter is what turns a byte stream into lines you can parse.</p>
+          <p lang="tr">Her byte bir başlangıç ve bir bitiş biti ile gönderilir, yani gerçek veri hızı baud/10'dur. UART mesaj kavramını bilmez, sadece byte bilir; byte akışını ayrıştırılabilir satırlara çeviren şey satır sonu ya da başka bir ayraçtır.</p>
+          <p class="used"><span lang="en">used in</span><span lang="tr">kullanıldığı yer</span>: <a href="/projects/serialscope/">SerialScope</a>, <a href="/projects/gesture-servo/">CV-02</a></p>
+        </article>
+        <article class="concept" data-area="emb">
+          <p class="eyebrow">BUS</p>
+          <h3>I²C</h3>
+          <span class="eq">SDA + SCL · open-drain · 7-bit address</span>
+          <p lang="en">Two shared lines, pulled up by resistors, with every device listening for its own address. Missing pull-ups or a wrong address are the two usual reasons a display stays black. Scanning the bus first saves time.</p>
+          <p lang="tr">Dirençlerle yukarı çekilmiş iki ortak hat; her cihaz kendi adresini dinliyor. Eksik pull-up'lar ya da yanlış adres, bir ekranın siyah kalmasının en yaygın iki sebebi. Önce hattı taramak zaman kazandırıyor.</p>
+          <p class="used"><span lang="en">used in</span><span lang="tr">kullanıldığı yer</span>: <a href="/projects/ble-display/">IOT-01</a></p>
+        </article>
+        <article class="concept" data-area="emb">
+          <p class="eyebrow">RF</p>
+          <h3>BLE GATT</h3>
+          <span class="eq">service → characteristic → value</span>
+          <p lang="en">BLE devices do not stream like a serial port. They expose small values (characteristics) grouped into services, and the other side reads, writes or subscribes to them. The default payload is small, about 20 bytes.</p>
+          <p lang="tr">BLE cihazları seri port gibi sürekli veri akıtmaz. Servislerde gruplanmış küçük değerler (karakteristikler) sunarlar; karşı taraf bunları okur, yazar ya da bunlara abone olur. Varsayılan veri yükü küçüktür, yaklaşık 20 byte.</p>
+          <p class="used"><span lang="en">used in</span><span lang="tr">kullanıldığı yer</span>: <a href="/projects/ble-display/">IOT-01</a></p>
+        </article>
+        <article class="concept" data-area="emb">
+          <p class="eyebrow">PWM</p>
+          <h3><span lang="en">Servo control signal</span><span lang="tr">Servo kontrol sinyali</span></h3>
+          <span class="eq">50 Hz · 1–2 ms pulse ↔ 0–180°</span>
+          <p lang="en">A hobby servo reads the width of a pulse, not a voltage level. The period stays at 20 ms and only the high time changes. Under load it draws much more current than a logic pin can give.</p>
+          <p lang="tr">Hobi servosu bir gerilim seviyesini değil, darbenin genişliğini okur. Periyot 20 ms'de sabit kalır, sadece yüksek kalma süresi değişir. Yük altında bir lojik pinin verebileceğinden çok daha fazla akım çeker.</p>
+          <p class="used"><span lang="en">used in</span><span lang="tr">kullanıldığı yer</span>: <a href="/projects/gesture-servo/">CV-02</a></p>
+        </article>
+        <article class="concept" data-area="emb">
+          <p class="eyebrow">PWR</p>
+          <h3><span lang="en">Relays &amp; load isolation</span><span lang="tr">Röleler ve yük izolasyonu</span></h3>
+          <span class="eq">GPIO → transistor → coil · flyback diode</span>
+          <p lang="en">A GPIO pin cannot drive a relay coil directly. A transistor switches the coil, and a diode across the coil absorbs the voltage spike when it turns off. Relay modules usually include both.</p>
+          <p lang="tr">Bir GPIO pini röle bobinini doğrudan süremez. Bobini bir transistör anahtarlar, bobine paralel bir diyot da kapanma anındaki gerilim sıçramasını sönümler. Röle modüllerinde genelde ikisi de bulunur.</p>
+          <p class="used"><span lang="en">used in</span><span lang="tr">kullanıldığı yer</span>: <a href="/projects/telegram-morse/">IOT-02</a></p>
+        </article>
+
+        <article class="concept" data-area="emb">
+          <p class="eyebrow">BENCH</p>
+          <h3><span lang="en">Breadboard → perfboard</span><span lang="tr">Breadboard → perfboard</span></h3>
+          <span class="eq">jumpers → soldered joints · plan the layout first</span>
+          <p lang="en">Breadboards are fast to change but their contacts loosen and long jumpers pick up noise. Moving a working circuit to perfboard makes it permanent; drawing the layout on paper first saves a lot of desoldering.</p>
+          <p lang="tr">Breadboard'lar hızlı değiştirilebilir ama kontakları gevşer ve uzun jumper kablolar gürültü toplar. Çalışan bir devreyi perfboard'a taşımak onu kalıcı yapar; yerleşimi önce kağıda çizmek çok fazla lehim sökmekten kurtarır.</p>
+          <p class="used"><span lang="en">used in</span><span lang="tr">kullanıldığı yer</span>: <span lang="en">hardware builds</span><span lang="tr">donanım projeleri</span></p>
+        </article>
+        <article class="concept" data-area="emb">
+          <p class="eyebrow">THERMAL</p>
+          <h3><span lang="en">Self-heating &amp; thermal time constant</span><span lang="tr">Kendi kendine ısınma ve ısıl zaman sabiti</span></h3>
+          <span class="eq">ΔT = P · R<sub>θ</sub> · (1 − e<sup>−t/τ</sup>)</span>
+          <p lang="en">A chip under load settles above room temperature by roughly power × thermal resistance, and it gets there with a time constant, like an RC circuit charging. Logging CPU and room temperature together makes both visible.</p>
+          <p lang="tr">Yük altındaki bir çip, oda sıcaklığının yaklaşık güç × ısıl direnç kadar üstüne oturur ve oraya, şarj olan bir RC devresi gibi, bir zaman sabitiyle ulaşır. CPU ve oda sıcaklığını birlikte kaydetmek ikisini de görünür kılar.</p>
+          <p class="used"><span lang="en">used in</span><span lang="tr">kullanıldığı yer</span>: <a href="/projects/telegram-morse/">IOT-02</a></p>
+        </article>
+        <article class="concept" data-area="emb">
+          <p class="eyebrow">NET</p>
+          <h3><span lang="en">Outbound-only IoT control</span><span lang="tr">Sadece dışa açılan IoT kontrolü</span></h3>
+          <span class="eq">device → HTTPS poll → bot API · check chat ID</span>
+          <p lang="en">If the device asks a server for commands instead of waiting for incoming connections, no router ports need to be opened. It still needs a whitelist so that only the owner can send commands.</p>
+          <p lang="tr">Cihaz gelen bağlantıları beklemek yerine bir sunucuya komut sorarsa modemde port açmaya gerek kalmaz. Yine de sadece sahibinin komut gönderebilmesi için bir izin listesi gerekir.</p>
+          <p class="used"><span lang="en">used in</span><span lang="tr">kullanıldığı yer</span>: <a href="/projects/telegram-morse/">IOT-02</a></p>
+        </article>
+
+        <!-- software -->        <article class="concept" data-area="sw">
+          <p class="eyebrow">SW</p>
+          <h3><span lang="en">Producer–consumer threads</span><span lang="tr">Üretici-tüketici thread'ler</span></h3>
+          <span class="eq">reader thread → deque(maxlen) → GUI timer</span>
+          <p lang="en">Blocking I/O goes in its own thread, the GUI keeps its own, and a bounded buffer sits between them. The GUI never waits, and memory stays flat during long sessions.</p>
+          <p lang="tr">Bloklayan G/Ç işlemleri kendi thread'inde, arayüz de kendi thread'inde çalışır; aralarında sınırlı bir tampon durur. Arayüz hiç beklemez ve uzun oturumlarda bellek sabit kalır.</p>
+          <p class="used"><span lang="en">used in</span><span lang="tr">kullanıldığı yer</span>: <a href="/projects/serialscope/">SerialScope</a></p>
+        </article>
+        <article class="concept" data-area="sw">
+          <p class="eyebrow">SW</p>
+          <h3><span lang="en">Python in WebAssembly</span><span lang="tr">WebAssembly'de Python</span></h3>
+          <span class="eq">Pyodide = CPython → WASM (+ NumPy, SciPy)</span>
+          <p lang="en">Lets the same Python package run on a server and in the browser. The price is a large first download; after that the page works without a backend.</p>
+          <p lang="tr">Aynı Python paketinin hem sunucuda hem tarayıcıda çalışmasını sağlar. Bedeli büyük bir ilk indirme; sonrasında sayfa bir backend olmadan çalışır.</p>
+          <p class="used"><span lang="en">used in</span><span lang="tr">kullanıldığı yer</span>: <a href="/projects/electrofield/">ElectroField</a></p>
+        </article>
+        <article class="concept" data-area="sw">
+          <p class="eyebrow">TEST</p>
+          <h3><span lang="en">Independent verification</span><span lang="tr">Bağımsız doğrulama</span></h3>
+          <span class="eq">method A ≈ method B (within tolerance)</span>
+          <p lang="en">Testing a numerical result against the same formula proves nothing. A second method that shares no code (a matrix cascade, a power balance, a residual in the original equation) catches real mistakes. Limiting cases such as σ → 0 are cheap and very effective tests.</p>
+          <p lang="tr">Sayısal bir sonucu aynı formülle test etmek hiçbir şey kanıtlamaz. Kod paylaşmayan ikinci bir yöntem (matris kaskadı, güç dengesi, orijinal denklemdeki artık) gerçek hataları yakalar. σ → 0 gibi limit durumları ucuz ve çok etkili testlerdir.</p>
+          <p class="used"><span lang="en">used in</span><span lang="tr">kullanıldığı yer</span>: <a href="/projects/electrofield/">ElectroField</a></p>
+        </article>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="year">2026</span> Atahan Güney</span>
+    <span class="rev">rev E · 2026-11 · <a href="https://github.com/atahanguney/atahanguney.github.io"><span lang="en">site source</span><span lang="tr">site kaynak kodu</span></a></span>
+  </div>
+</footer>
+<script src="/assets/site.js" defer></script>
+</body>
+</html>

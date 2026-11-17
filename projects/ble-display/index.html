@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en"
+  data-title-en="ESP32 smart notification display · Atahan Güney"
+  data-title-tr="ESP32 akıllı bildirim ekranı · Atahan Güney"
+  data-desc-en="An ESP32 running MicroPython receives phone notifications over Bluetooth Low Energy and shows them on an SSD1306 OLED over I2C."
+  data-desc-tr="MicroPython çalıştıran bir ESP32, telefon bildirimlerini Bluetooth Low Energy ile alıp I2C üzerinden bir SSD1306 OLED ekranda gösteriyor.">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>(function(){var d=document.documentElement,l=null,t=null;try{l=new URLSearchParams(location.search).get('lang')||localStorage.getItem('lang');t=localStorage.getItem('theme')}catch(e){}if(l==='tr'){d.setAttribute('data-lang','tr');d.lang='tr'}if(t)d.setAttribute('data-theme',t)})()</script>
+<title>BLE notification display · Atahan Güney</title>
+<meta name="description" content="An ESP32 running MicroPython receives phone notifications over Bluetooth Low Energy and shows them on an SSD1306 OLED over I2C.">
+<meta name="author" content="Atahan Güney">
+<meta name="theme-color" content="#1f4e79">
+<link rel="canonical" href="https://atahanguney.github.io/projects/ble-display/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BLE notification display">
+<meta property="og:url" content="https://atahanguney.github.io/projects/ble-display/">
+<meta property="og:image" content="https://atahanguney.github.io/assets/og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap">
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main"><span lang="en">Skip to content</span><span lang="tr">İçeriğe geç</span></a>
+<header class="top">
+  <div class="wrap">
+    <a class="mark" href="/" aria-label="Atahan Güney">
+      <svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="5" fill="#1f4e79"/><path d="M5 16c2.75-7 8.25-7 11 0s8.25 7 11 0" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round"/><path d="M5 16c2.75 4.2 8.25 4.2 11 0s8.25-4.2 11 0" stroke="#e57368" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg>
+      <span>Atahan Güney</span><small>EEE</small>
+    </a>
+    <div class="right">
+      <nav class="nav" id="nav" aria-label="Main">
+        <a href="/projects/" aria-current="page"><span lang="en">Projects</span><span lang="tr">Projeler</span></a>
+        <a href="/notes/"><span lang="en">Notes</span><span lang="tr">Notlar</span></a>
+        <a href="/about/"><span lang="en">About</span><span lang="tr">Hakkımda</span></a>
+        <a href="/#contact"><span lang="en">Contact</span><span lang="tr">İletişim</span></a>
+      </nav>
+      <span class="switch" role="group" aria-label="Language / Dil"><a href="?lang=en" data-setlang="en" hreflang="en">EN</a><a href="?lang=tr" data-setlang="tr" hreflang="tr">TR</a></span>
+      <button class="theme" id="theme" type="button" aria-label="Toggle colour theme">theme</button>
+      <button class="theme menu-btn" id="menu" type="button" aria-expanded="false" aria-controls="nav">menu</button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <div class="page-head">
+    <div class="wrap">
+      <p class="crumbs"><a href="/projects/"><span lang="en">Projects</span><span lang="tr">Projeler</span></a> / IOT-01</p>
+      <p class="eyebrow"><span lang="en">Wireless · MicroPython · display driver</span><span lang="tr">Kablosuz · MicroPython · ekran sürücüsü</span></p>
+      <h1><span lang="en">ESP32 smart notification display</span><span lang="tr">ESP32 akıllı bildirim ekranı</span></h1>
+      <p class="lede" lang="en">An ESP32 running MicroPython acts as a Bluetooth Low Energy device. My phone sends it the text of a notification, and the ESP32 draws it on a 0.96″ SSD1306 OLED connected over I²C.</p>
+      <p class="lede" lang="tr">MicroPython çalıştıran bir ESP32, Bluetooth Low Energy cihazı gibi davranıyor. Telefonum ona bir bildirimin metnini gönderiyor, ESP32 de bunu I²C ile bağlı 0.96″ SSD1306 OLED ekrana çiziyor.</p>
+      <div class="chain" aria-label="Signal chain"><span>Phone</span><span class="arr">→</span><span>BLE (GATT write)</span><span class="arr">→</span><span>ESP32 · MicroPython</span><span class="arr">→</span><span>I²C</span><span class="arr">→</span><span>SSD1306 128×64</span></div>
+    </div>
+  </div>
+
+  <section>
+    <div class="wrap narrow prose">
+      <div lang="en">
+        <h2>Why this project</h2>
+        <p>It is a small build, but it touches two protocols that show up everywhere in embedded work, and I wanted to understand both on a real board instead of only in a datasheet: BLE for the wireless side and I²C for the wired side.</p>
+        <h2>The BLE side</h2>
+        <p>BLE does not work like a serial cable. A device exposes <strong>services</strong>, each service has <strong>characteristics</strong>, and a characteristic is basically a small value with an ID (a UUID) and permissions such as read, write or notify. This structure is called GATT.</p>
+        <p>On the ESP32 I set up a peripheral that advertises itself and exposes one writable characteristic. When the phone writes bytes to it, MicroPython raises an interrupt-style event, the handler reads the value, decodes it as UTF-8 and passes the text to the display code. The phone is the central, the ESP32 is the peripheral.</p>
+        <div class="callout"><b>Something that surprised me:</b> a single BLE write is small (the default payload is only around 20 bytes). Longer messages have to be split into pieces and put back together on the board, or the connection has to negotiate a larger MTU.</div>
+        <h2>The I²C side</h2>
+        <p>I²C needs only two wires, SDA (data) and SCL (clock), plus power and ground. Both lines are open-drain, so they need pull-up resistors; most OLED breakout boards already have them. Each device has a 7-bit address, and the SSD1306 is usually at <code>0x3C</code>. Running <code>i2c.scan()</code> first and seeing that address come back is the quickest way to know the wiring is right.</p>
+        <pre><code>from machine import Pin, I2C
+import ssd1306
+
+i2c = I2C(0, scl=Pin(22), sda=Pin(21))
+print(i2c.scan())            <span class="cmt"># expect [60] → 0x3C</span>
+oled = ssd1306.SSD1306_I2C(128, 64, i2c)
+oled.fill(0); oled.text("hello", 0, 0); oled.show()</code></pre>
+        <p>The display is 128×64 pixels and the built-in font is 8×8, so one screen fits 16 characters × 8 lines. Long notifications have to be wrapped or scrolled, which was a nice small exercise in string handling.</p>
+        <h2>Concepts used</h2>
+        <p>BLE advertising, GATT services and characteristics, event callbacks, UTF-8 decoding, I²C addressing and pull-ups, framebuffers. See the <a href="/notes/">notes page</a>.</p>
+      </div>
+      <div lang="tr">
+        <h2>Neden bu proje</h2>
+        <p>Küçük bir proje ama gömülü sistemlerde her yerde karşıma çıkan iki protokole dokunuyor ve ikisini de sadece datasheet'ten değil, gerçek bir kart üzerinde anlamak istedim: kablosuz taraf için BLE, kablolu taraf için I²C.</p>
+        <h2>BLE tarafı</h2>
+        <p>BLE bir seri kablo gibi çalışmıyor. Bir cihaz <strong>servisler</strong> sunuyor, her servisin <strong>karakteristikleri</strong> var; bir karakteristik de temelde bir kimliği (UUID) ve okuma, yazma ya da bildirim gibi izinleri olan küçük bir değer. Bu yapıya GATT deniyor.</p>
+        <p>ESP32'de kendini duyuran (advertising) ve yazılabilir tek bir karakteristik sunan bir peripheral kurdum. Telefon buna byte yazdığında MicroPython kesme benzeri bir olay üretiyor, handler değeri okuyor, UTF-8 olarak çözüyor ve metni ekran koduna veriyor. Telefon central, ESP32 ise peripheral rolünde.</p>
+        <div class="callout"><b>Beni şaşırtan bir şey:</b> tek bir BLE yazması küçük (varsayılan veri yükü sadece 20 byte civarı). Daha uzun mesajların parçalara bölünüp kartta yeniden birleştirilmesi ya da bağlantının daha büyük bir MTU üzerinde anlaşması gerekiyor.</div>
+        <h2>I²C tarafı</h2>
+        <p>I²C, güç ve toprağa ek olarak sadece iki kablo istiyor: SDA (veri) ve SCL (saat). İki hat da open-drain olduğu için pull-up dirençlerine ihtiyaç var; çoğu OLED modülünde bunlar zaten takılı geliyor. Her cihazın 7 bitlik bir adresi var ve SSD1306 genelde <code>0x3C</code> adresinde. Önce <code>i2c.scan()</code> çalıştırıp bu adresin geldiğini görmek, kablolamanın doğru olduğunu anlamanın en hızlı yolu.</p>
+        <pre><code>from machine import Pin, I2C
+import ssd1306
+
+i2c = I2C(0, scl=Pin(22), sda=Pin(21))
+print(i2c.scan())            <span class="cmt"># [60] bekleniyor → 0x3C</span>
+oled = ssd1306.SSD1306_I2C(128, 64, i2c)
+oled.fill(0); oled.text("merhaba", 0, 0); oled.show()</code></pre>
+        <p>Ekran 128×64 piksel ve yerleşik font 8×8, yani bir ekrana 16 karakter × 8 satır sığıyor. Uzun bildirimlerin satıra bölünmesi ya da kaydırılması gerekiyor; bu da metin işleme açısından güzel bir küçük alıştırma oldu.</p>
+        <h2>Kullanılan kavramlar</h2>
+        <p>BLE advertising, GATT servisleri ve karakteristikleri, olay callback'leri, UTF-8 çözme, I²C adresleme ve pull-up'lar, framebuffer. <a href="/notes/">Notlar sayfasına</a> bakabilirsiniz.</p>
+      </div>
+      <div class="next" style="margin-top:40px">
+        <a href="/projects/gesture-servo/"><small>← CV-02</small><span lang="en">Hand gesture → servo</span><span lang="tr">El hareketi → servo</span></a>
+        <a href="/projects/telegram-morse/"><small>→ IOT-02</small><span lang="en">Telegram relay &amp; Morse</span><span lang="tr">Telegram röle ve Mors</span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="year">2026</span> Atahan Güney</span>
+    <span class="rev">rev E · 2026-11 · <a href="https://github.com/atahanguney/atahanguney.github.io"><span lang="en">site source</span><span lang="tr">site kaynak kodu</span></a></span>
+  </div>
+</footer>
+<script src="/assets/site.js" defer></script>
+</body>
+</html>

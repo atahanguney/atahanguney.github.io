@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en"
+  data-title-en="Projects · Atahan Güney"
+  data-title-tr="Projeler · Atahan Güney"
+  data-desc-en="Projects by Atahan Güney: ElectroField, SerialScope, EAR drowsiness detection, gesture-controlled servo, ESP32 notification display and a Telegram-controlled Raspberry Pi relay system, each with a write-up."
+  data-desc-tr="Atahan Güney'in projeleri: ElectroField, SerialScope, EAR ile yorgunluk tespiti, el hareketiyle servo kontrolü, ESP32 bildirim ekranı ve Telegram kontrollü Raspberry Pi röle sistemi; her biri anlatımıyla.">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>(function(){var d=document.documentElement,l=null,t=null;try{l=new URLSearchParams(location.search).get('lang')||localStorage.getItem('lang');t=localStorage.getItem('theme')}catch(e){}if(l==='tr'){d.setAttribute('data-lang','tr');d.lang='tr'}if(t)d.setAttribute('data-theme',t)})()</script>
+<title>Projects · Atahan Güney</title>
+<meta name="description" content="Projects by Atahan Güney: ElectroField, SerialScope, EAR drowsiness detection, gesture-controlled servo, ESP32 notification display and a Telegram-controlled Raspberry Pi relay system, each with a write-up.">
+<meta name="author" content="Atahan Güney">
+<meta name="theme-color" content="#1f4e79">
+<link rel="canonical" href="https://atahanguney.github.io/projects/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:title" content="Projects · Atahan Güney">
+<meta property="og:url" content="https://atahanguney.github.io/projects/">
+<meta property="og:image" content="https://atahanguney.github.io/assets/og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap">
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main"><span lang="en">Skip to content</span><span lang="tr">İçeriğe geç</span></a>
+<header class="top">
+  <div class="wrap">
+    <a class="mark" href="/" aria-label="Atahan Güney">
+      <svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="5" fill="#1f4e79"/><path d="M5 16c2.75-7 8.25-7 11 0s8.25 7 11 0" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round"/><path d="M5 16c2.75 4.2 8.25 4.2 11 0s8.25-4.2 11 0" stroke="#e57368" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg>
+      <span>Atahan Güney</span><small>EEE</small>
+    </a>
+    <div class="right">
+      <nav class="nav" id="nav" aria-label="Main">
+        <a href="/projects/" aria-current="page"><span lang="en">Projects</span><span lang="tr">Projeler</span></a>
+        <a href="/notes/"><span lang="en">Notes</span><span lang="tr">Notlar</span></a>
+        <a href="/about/"><span lang="en">About</span><span lang="tr">Hakkımda</span></a>
+        <a href="/#contact"><span lang="en">Contact</span><span lang="tr">İletişim</span></a>
+      </nav>
+      <span class="switch" role="group" aria-label="Language / Dil"><a href="?lang=en" data-setlang="en" hreflang="en">EN</a><a href="?lang=tr" data-setlang="tr" hreflang="tr">TR</a></span>
+      <button class="theme" id="theme" type="button" aria-label="Toggle colour theme">theme</button>
+      <button class="theme menu-btn" id="menu" type="button" aria-expanded="false" aria-controls="nav">menu</button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <div class="page-head">
+    <div class="wrap">
+      <p class="eyebrow"><span lang="en">Index · 6 projects</span><span lang="tr">Dizin · 6 proje</span></p>
+      <h1><span lang="en">Projects</span><span lang="tr">Projeler</span></h1>
+      <p class="lede" lang="en">Each project has its own page: the problem, how the parts fit together, the decisions behind it and what I learned. They are grouped by what they are mostly about, although most of them end up being a bit of everything.</p>
+      <p class="lede" lang="tr">Her projenin kendi sayfası var: problem, parçaların nasıl bir araya geldiği, arkasındaki kararlar ve ne öğrendiğim. Projeleri en çok neyle ilgili olduklarına göre grupladım, ama çoğu sonunda biraz her şeyden oluyor.</p>
+    </div>
+  </div>
+
+  <section aria-labelledby="sw-h">
+    <div class="wrap">
+      <p class="eyebrow"><span class="secnum">A</span><span lang="en">Software tools</span><span lang="tr">Yazılım araçları</span></p>
+      <h2 id="sw-h"><span lang="en">Tools I wrote for my courses and labs</span><span lang="tr">Derslerim ve laboratuvarlarım için yazdığım araçlar</span></h2>
+      <div class="index">
+        <a class="row has-thumb" href="/projects/electrofield/">
+          <span class="id">SW-01</span>
+          <span class="thumb" aria-hidden="true"><svg viewBox="0 0 92 64"><line x1="6" y1="32" x2="86" y2="32" style="stroke:var(--rule-2)"/><path d="M6 32 C12 6 18 6 24 32 S36 56 42 32 S52 14 58 32 S67 46 72 32 S80 24 86 32" fill="none" style="stroke:var(--e)" stroke-width="2"/><path d="M6 32 C12 44 18 44 24 32 S36 22 42 32 S52 40 58 32 S67 27 72 32" fill="none" style="stroke:var(--h)" stroke-width="1.5" stroke-dasharray="3 2"/></svg></span>
+          <div>
+            <h3>ElectroField</h3>
+            <p lang="en">Applied electromagnetics in the browser. Nine chapters from vectors to antennas, derivations with the numbers substituted, and an independent check for every result. Python runs client-side through Pyodide.</p>
+            <p lang="tr">Tarayıcıda uygulamalı elektromanyetik. Vektörlerden antenlere dokuz bölüm, sayılar yerine konmuş türetmeler ve her sonuç için bağımsız bir kontrol. Python, Pyodide ile tarayıcıda çalışıyor.</p>
+          </div>
+          <span class="meta">NumPy · SciPy · FastAPI<br>Pyodide · Plotly · KaTeX</span>
+        </a>
+        <a class="row has-thumb" href="/projects/serialscope/">
+          <span class="id">SW-02</span>
+          <span class="thumb" aria-hidden="true"><svg viewBox="0 0 92 64"><polyline points="6,38 10,28 14,42 18,26 22,40 26,24 30,36 34,22 38,38 42,20 46,32 50,22 54,34 58,18 62,30 66,20 70,32 74,18 78,28 82,16 86,26" fill="none" style="stroke:var(--ink-3)" stroke-width="1"/><path d="M6 34 C30 31 52 26 86 20" fill="none" style="stroke:var(--accent)" stroke-width="2.2"/></svg></span>
+          <div>
+            <h3>SerialScope</h3>
+            <p lang="en">UART telemetry studio: live plotting, a real-time EMA low-pass filter, threshold alarm, CSV export and two-way commands to the board. Includes a virtual MCU for testing without hardware.</p>
+            <p lang="tr">UART telemetri aracı: canlı grafik, gerçek zamanlı EMA alçak geçiren filtre, eşik alarmı, CSV dışa aktarma ve karta çift yönlü komutlar. Donanımsız test için sanal bir MCU da içeriyor.</p>
+          </div>
+          <span class="meta">PySerial · Tkinter<br>Matplotlib · threading</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="cv-h">
+    <div class="wrap">
+      <p class="eyebrow"><span class="secnum">B</span><span lang="en">Computer vision</span><span lang="tr">Görüntü işleme</span></p>
+      <h2 id="cv-h"><span lang="en">A webcam as a sensor</span><span lang="tr">Sensör olarak kamera</span></h2>
+      <div class="index">
+        <a class="row has-thumb" href="/projects/drowsiness/">
+          <span class="id">CV-01</span>
+          <span class="thumb" aria-hidden="true"><svg viewBox="0 0 92 64"><path d="M14 32 Q46 8 78 32 Q46 56 14 32Z" fill="none" style="stroke:var(--ink-2)" stroke-width="1.5"/><circle cx="46" cy="32" r="7" style="fill:var(--accent)"/><g style="stroke:var(--e)" stroke-dasharray="2 2"><line x1="35" y1="21" x2="35" y2="43"/><line x1="57" y1="21" x2="57" y2="43"/></g><g style="fill:var(--e)"><circle cx="14" cy="32" r="2.2"/><circle cx="35" cy="21" r="2.2"/><circle cx="57" cy="21" r="2.2"/><circle cx="78" cy="32" r="2.2"/><circle cx="57" cy="43" r="2.2"/><circle cx="35" cy="43" r="2.2"/></g></svg></span>
+          <div>
+            <h3><span lang="en">Drowsiness detection with EAR</span><span lang="tr">EAR ile yorgunluk tespiti</span></h3>
+            <p lang="en">Real-time face tracking with OpenCV. Six landmarks around each eye give the Eye Aspect Ratio; when it stays below a threshold for enough frames, the program raises a visual alert.</p>
+            <p lang="tr">OpenCV ile gerçek zamanlı yüz takibi. Her gözün etrafındaki altı nokta Göz En-Boy Oranını (EAR) veriyor; oran yeterince kare boyunca eşiğin altında kalınca program görsel uyarı veriyor.</p>
+          </div>
+          <span class="meta">Python · OpenCV<br>facial landmarks · EAR</span>
+        </a>
+        <a class="row has-thumb" href="/projects/gesture-servo/">
+          <span class="id">CV-02</span>
+          <span class="thumb" aria-hidden="true"><svg viewBox="0 0 92 64"><path d="M20 44 A26 26 0 0 1 72 44" fill="none" style="stroke:var(--rule-2)" stroke-dasharray="3 3"/><rect x="32" y="44" width="28" height="12" rx="2" fill="none" style="stroke:var(--ink-2)" stroke-width="1.5"/><line x1="46" y1="44" x2="64" y2="24" style="stroke:var(--accent)" stroke-width="3" stroke-linecap="round"/><circle cx="46" cy="44" r="3" style="fill:var(--ink)"/><text x="66" y="20" font-family="IBM Plex Mono, monospace" font-size="9" style="fill:var(--ink-3)">θ</text></svg></span>
+          <div>
+            <h3><span lang="en">Hand gesture → servo</span><span lang="tr">El hareketi → servo</span></h3>
+            <p lang="en">OpenCV tracks a hand, Python maps its position to an angle, and an Arduino drives the servo after reading the value over serial. Half of the work was on the breadboard.</p>
+            <p lang="tr">OpenCV eli takip ediyor, Python konumu bir açıya çeviriyor, Arduino da değeri seri porttan okuyup servoyu sürüyor. İşin yarısı breadboard üzerindeydi.</p>
+          </div>
+          <span class="meta">OpenCV · Arduino Uno<br>UART · PWM</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="iot-h">
+    <div class="wrap">
+      <p class="eyebrow"><span class="secnum">C</span><span lang="en">IoT &amp; embedded</span><span lang="tr">IoT ve gömülü</span></p>
+      <h2 id="iot-h"><span lang="en">Boards, wires and protocols</span><span lang="tr">Kartlar, kablolar ve protokoller</span></h2>
+      <div class="index">
+        <a class="row has-thumb" href="/projects/ble-display/">
+          <span class="id">IOT-01</span>
+          <span class="thumb" aria-hidden="true"><svg viewBox="0 0 92 64"><rect x="14" y="14" width="56" height="38" rx="3" fill="#0d1014" style="stroke:var(--ink-2)"/><g fill="#8db4dc"><rect x="20" y="21" width="34" height="3"/><rect x="20" y="29" width="24" height="3"/><rect x="20" y="37" width="40" height="3"/></g><path d="M76 20 q5 5 0 10 M80 16 q9 9 0 18" fill="none" style="stroke:var(--accent)" stroke-width="1.5"/></svg></span>
+          <div>
+            <h3><span lang="en">ESP32 smart notification display</span><span lang="tr">ESP32 akıllı bildirim ekranı</span></h3>
+            <p lang="en">An ESP32 with MicroPython receives live phone notifications over Bluetooth Low Energy and draws them on an SSD1306 OLED over I²C.</p>
+            <p lang="tr">MicroPython çalıştıran bir ESP32, telefondaki canlı bildirimleri Bluetooth Low Energy ile alıp I²C üzerinden bir SSD1306 OLED'e yazıyor.</p>
+          </div>
+          <span class="meta">ESP32 · MicroPython<br>BLE GATT · I²C</span>
+        </a>
+        <a class="row has-thumb" href="/projects/telegram-morse/">
+          <span class="id">IOT-02</span>
+          <span class="thumb" aria-hidden="true"><svg viewBox="0 0 92 64"><g style="fill:var(--ink)"><circle cx="14" cy="22" r="3"/><rect x="21" y="19.5" width="12" height="5" rx="1"/><circle cx="40" cy="22" r="3"/><circle cx="50" cy="22" r="3"/><rect x="57" y="19.5" width="12" height="5" rx="1"/><circle cx="76" cy="22" r="3"/></g><path d="M10 46 H34 M34 46 L52 37 M54 46 H82" fill="none" style="stroke:var(--accent)" stroke-width="2" stroke-linecap="round"/><circle cx="34" cy="46" r="2.5" style="fill:var(--accent)"/><circle cx="54" cy="46" r="2.5" style="fill:var(--accent)"/></svg></span>
+          <div>
+            <h3><span lang="en">Telegram-controlled relay, Morse &amp; thermal log</span><span lang="tr">Telegram kontrollü röle, Mors ve sıcaklık kaydı</span></h3>
+            <p lang="en">A Raspberry Pi turns Telegram bot commands into remote power control and Morse code audio through a relay module, and logs its CPU temperature against the room for comparison graphs.</p>
+            <p lang="tr">Bir Raspberry Pi, Telegram bot komutlarını röle modülü üzerinden uzaktan güç kontrolüne ve Mors kodu sesine çeviriyor; CPU sıcaklığını da oda sıcaklığıyla karşılaştırmalı grafikler için kaydediyor.</p>
+          </div>
+          <span class="meta">Raspberry Pi · Python<br>Relay · Telegram API</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="bin-h">
+    <div class="wrap">
+      <p class="eyebrow"><span class="secnum">D</span><span lang="en">Parts bin &amp; stack</span><span lang="tr">Parça kutusu ve araçlar</span></p>
+      <h2 id="bin-h"><span lang="en">What these projects are built with</span><span lang="tr">Bu projelerde kullandıklarım</span></h2>
+      <div class="bin">
+        <div>
+          <h3><span lang="en">Dev boards</span><span lang="tr">Geliştirme kartları</span></h3>
+          <div class="chips"><span class="chip">ESP32 (WROOM)</span><span class="chip">ESP32-S3</span><span class="chip">Raspberry Pi</span><span class="chip">Raspberry Pi Pico 2W</span><span class="chip">Arduino Uno</span></div>
+        </div>
+        <div>
+          <h3><span lang="en">Components</span><span lang="tr">Bileşenler</span></h3>
+          <div class="chips"><span class="chip" lang="en">relay modules</span><span class="chip" lang="tr">röle modülleri</span><span class="chip" lang="en">servo motors</span><span class="chip" lang="tr">servo motorlar</span><span class="chip" lang="en">SSD1306 OLED</span><span class="chip" lang="tr">SSD1306 OLED</span><span class="chip" lang="en">sensors</span><span class="chip" lang="tr">sensörler</span><span class="chip">webcam</span></div>
+        </div>
+        <div>
+          <h3><span lang="en">Interfaces</span><span lang="tr">Arayüzler</span></h3>
+          <div class="chips"><span class="chip">UART</span><span class="chip">I²C</span><span class="chip">BLE</span><span class="chip">Wi-Fi</span><span class="chip">PWM</span><span class="chip">ADC</span><span class="chip">GPIO</span></div>
+        </div>
+        <div>
+          <h3><span lang="en">Languages</span><span lang="tr">Diller</span></h3>
+          <div class="chips"><span class="chip">Python</span><span class="chip">MicroPython</span><span class="chip">C / C++</span><span class="chip">JavaScript</span><span class="chip">MATLAB</span></div>
+        </div>
+        <div>
+          <h3><span lang="en">Libraries</span><span lang="tr">Kütüphaneler</span></h3>
+          <div class="chips"><span class="chip">OpenCV</span><span class="chip">NumPy</span><span class="chip">SciPy</span><span class="chip">Matplotlib</span><span class="chip">PySerial</span><span class="chip">Tkinter</span><span class="chip">FastAPI</span><span class="chip">Pyodide</span><span class="chip">pytest</span></div>
+        </div>
+        <div>
+          <h3><span lang="en">Design &amp; bench</span><span lang="tr">Tasarım ve tezgâh</span></h3>
+          <div class="chips"><span class="chip">LTspice</span><span class="chip">KiCad</span><span class="chip">breadboard</span><span class="chip">perfboard</span><span class="chip" lang="en">soldering</span><span class="chip" lang="tr">lehimleme</span><span class="chip" lang="en">multimeter</span><span class="chip" lang="tr">multimetre</span></div>
+        </div>
+      </div>
+      <div class="callout" style="margin-top:30px">
+        <span lang="en"><b>Currently exploring:</b> voice recognition on ESP32 and ESP32-S3 boards. No write-up yet; it will get a page here when it works.</span>
+        <span lang="tr"><b>Şu an denediğim:</b> ESP32 ve ESP32-S3 kartlarıyla ses tanıma. Henüz bir anlatımı yok; çalıştığında burada kendi sayfası olacak.</span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="year">2026</span> Atahan Güney</span>
+    <span class="rev">rev E · 2026-11 · <a href="https://github.com/atahanguney/atahanguney.github.io"><span lang="en">site source</span><span lang="tr">site kaynak kodu</span></a></span>
+  </div>
+</footer>
+<script src="/assets/site.js" defer></script>
+</body>
+</html>
