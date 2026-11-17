@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Atahan Güney — Electrical &amp; Electronics Engineering</title>
+<meta name="description" content="Atahan Güney (Atahan Guney), 3rd-year electrical and electronics engineering student at Antalya Bilim University. Projects: ElectroField, an applied electromagnetics workbench, SerialScope, a UART telemetry and DSP tool, and ESP32 / Raspberry Pi Pico / Arduino builds.">
+<meta name="author" content="Atahan Güney">
+<meta name="theme-color" content="#1f4e79">
+<link rel="canonical" href="https://atahanguney.github.io/">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="me" href="https://github.com/atahanguney">
+<link rel="me" href="https://www.linkedin.com/in/atahan-g%C3%BCney">
+
+<meta property="og:type" content="profile">
+<meta property="og:site_name" content="Atahan Güney">
+<meta property="og:title" content="Atahan Güney — Electrical &amp; Electronics Engineering">
+<meta property="og:description" content="Electromagnetics software, embedded telemetry and hardware prototypes. ElectroField, SerialScope and ESP32 / Pico / Arduino builds.">
+<meta property="og:url" content="https://atahanguney.github.io/">
+<meta property="og:image" content="https://atahanguney.github.io/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Atahan Güney — electrical and electronics engineering">
+<meta property="profile:first_name" content="Atahan">
+<meta property="profile:last_name" content="Güney">
+<meta name="twitter:card" content="summary_large_image">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://atahanguney.github.io/#person",
+      "name": "Atahan Güney",
+      "alternateName": ["Atahan Guney", "atahanguney"],
+      "givenName": "Atahan",
+      "familyName": "Güney",
+      "url": "https://atahanguney.github.io/",
+      "image": "https://atahanguney.github.io/assets/og.png",
+      "jobTitle": "Electrical and Electronics Engineering Student (3rd year)",
+      "description": "Third-year electrical and electronics engineering student at Antalya Bilim University, interested in applied electromagnetics, embedded systems and signal processing.",
+      "affiliation": {
+        "@type": "CollegeOrUniversity",
+        "name": "Antalya Bilim University",
+        "alternateName": "Antalya Bilim Üniversitesi",
+        "department": { "@type": "Organization", "name": "Department of Electrical and Electronics Engineering" }
+      },
+      "knowsAbout": ["Applied electromagnetics", "Maxwell's equations", "Transmission lines", "Embedded systems", "Digital signal processing", "UART telemetry", "IoT", "ESP32", "Raspberry Pi Pico", "Arduino", "MicroPython", "Python", "NumPy", "SciPy", "OpenCV", "MATLAB", "LTspice", "KiCad"],
+      "sameAs": [
+        "https://github.com/atahanguney",
+        "https://www.linkedin.com/in/atahan-g%C3%BCney"
+      ]
+    },
+    {
+      "@type": "ProfilePage",
+      "@id": "https://atahanguney.github.io/#page",
+      "url": "https://atahanguney.github.io/",
+      "name": "Atahan Güney",
+      "inLanguage": "en",
+      "dateModified": "2026-11-17",
+      "mainEntity": { "@id": "https://atahanguney.github.io/#person" },
+      "isPartOf": { "@id": "https://atahanguney.github.io/#site" }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://atahanguney.github.io/#site",
+      "url": "https://atahanguney.github.io/",
+      "name": "Atahan Güney",
+      "alternateName": "Atahan Guney",
+      "publisher": { "@id": "https://atahanguney.github.io/#person" }
+    },
+    {
+      "@type": "WebApplication",
+      "@id": "https://atahanguney.github.io/ElectroField/#app",
+      "name": "ElectroField",
+      "url": "https://atahanguney.github.io/ElectroField/",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Any (web browser)",
+      "isAccessibleForFree": true,
+      "description": "Interactive applied electromagnetics workbench with step-by-step derivations and independent numerical verification.",
+      "author": { "@id": "https://atahanguney.github.io/#person" },
+      "codeRepository": "https://github.com/atahanguney/ElectroField"
+    },
+    {
+      "@type": "SoftwareSourceCode",
+      "@id": "https://github.com/atahanguney/SerialScope#code",
+      "name": "SerialScope",
+      "description": "UART telemetry, real-time low-pass DSP filter (EMA) and hardware control studio for microcontrollers.",
+      "programmingLanguage": "Python",
+      "codeRepository": "https://github.com/atahanguney/SerialScope",
+      "author": { "@id": "https://atahanguney.github.io/#person" }
+    }
+  ]
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap">
+
+<style>
+:root {
+  --paper: #fbfaf7; --panel: #ffffff; --ink: #1c1f23; --ink-2: #474d55; --ink-3: #5d636b;
+  --rule: #e3e0d8; --rule-2: #cfcbc0; --accent: #1f4e79; --accent-bg: #eaf0f6;
+  --e: #b3261e; --h: #1f4e79; --s: #2e7d32;
+  --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #15171a; --panel: #1c1f23; --ink: #e6e3dc; --ink-2: #b9b6ae; --ink-3: #9a968e;
+    --rule: #2c3035; --rule-2: #3a3f45; --accent: #8db4dc; --accent-bg: #1f2a36;
+    --e: #e57368; --h: #8db4dc; --s: #7cc47f;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #15171a; --panel: #1c1f23; --ink: #e6e3dc; --ink-2: #b9b6ae; --ink-3: #9a968e;
+  --rule: #2c3035; --rule-2: #3a3f45; --accent: #8db4dc; --accent-bg: #1f2a36;
+  --e: #e57368; --h: #8db4dc; --s: #7cc47f;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 16px/1.65 var(--sans); }
+a { color: var(--accent); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+img { max-width: 100%; height: auto; display: block; }
+h1, h2, h3 { font-family: var(--serif); font-weight: 700; line-height: 1.2; margin: 0; }
+p { margin: 0 0 1em; }
+.skip { position: absolute; left: -999px; top: 8px; background: var(--panel); padding: 8px 12px; border: 1px solid var(--rule-2); z-index: 10; }
+.skip:focus { left: 16px; }
+
+.wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+@media (max-width: 560px) { .wrap { padding: 0 16px; } }
+
+/* header */
+.top { border-bottom: 1px solid var(--rule); background: var(--paper); position: sticky; top: 0; z-index: 5; }
+.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 60px; }
+.mark { display: flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; font-weight: 600; letter-spacing: .01em; }
+.mark svg { flex: none; }
+.nav { display: flex; gap: 22px; font-size: 14px; }
+.nav a { color: var(--ink-2); text-decoration: none; }
+.nav a:hover { color: var(--accent); }
+.theme { background: none; border: 1px solid var(--rule-2); color: var(--ink-2); border-radius: 4px; font: 12px var(--mono); padding: 4px 8px; cursor: pointer; }
+.right { display: flex; align-items: center; gap: 22px; }
+@media (max-width: 760px) { .nav { display: none; } }
+
+/* labels */
+.eyebrow { font: 500 12px/1.4 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); margin: 0 0 12px; }
+.secnum { color: var(--accent); margin-right: 10px; }
+
+/* hero */
+.hero { padding: 72px 0 56px; border-bottom: 1px solid var(--rule); }
+.hero-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 48px; align-items: center; }
+@media (max-width: 860px) { .hero-grid { grid-template-columns: 1fr; gap: 32px; } .hero { padding-top: 48px; } }
+.hero h1 { font-size: clamp(40px, 7vw, 64px); letter-spacing: -.01em; }
+.aka { font: 13px var(--mono); color: var(--ink-3); margin: 10px 0 24px; }
+.lede { font-size: 19px; line-height: 1.6; color: var(--ink-2); max-width: 36em; }
+.cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 4px; border: 1px solid var(--accent); font-weight: 500; font-size: 15px; text-decoration: none; }
+.btn.primary { background: var(--accent); color: var(--paper); }
+.btn.ghost { color: var(--accent); background: transparent; }
+.btn:hover { text-decoration: none; filter: brightness(1.08); }
+
+.figure { background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; padding: 18px 18px 12px; }
+.figure svg { width: 100%; height: auto; display: block; }
+.figcap { font: 12px/1.5 var(--mono); color: var(--ink-3); margin-top: 10px; display: flex; flex-wrap: wrap; gap: 6px 16px; }
+.key { display: inline-flex; align-items: center; gap: 6px; }
+.key i { width: 14px; height: 2px; display: inline-block; }
+
+/* spec sheet */
+.spec { width: 100%; border-collapse: collapse; margin-top: 32px; font-size: 14px; }
+.spec th, .spec td { text-align: left; padding: 9px 0; border-top: 1px solid var(--rule); vertical-align: top; }
+.spec th { font: 500 12px var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); width: 132px; padding-right: 16px; padding-top: 11px; }
+.spec tr:last-child th, .spec tr:last-child td { border-bottom: 1px solid var(--rule); }
+
+/* sections */
+section { padding: 72px 0; border-bottom: 1px solid var(--rule); }
+@media (max-width: 560px) { section { padding: 52px 0; } }
+section h2 { font-size: clamp(28px, 4vw, 36px); margin-bottom: 28px; }
+.two { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 48px; }
+@media (max-width: 860px) { .two { grid-template-columns: 1fr; gap: 28px; } }
+.prose p { color: var(--ink-2); max-width: 40em; }
+.prose strong { color: var(--ink); font-weight: 600; }
+.note { border-left: 2px solid var(--rule-2); padding: 2px 0 2px 16px; color: var(--ink-2); font-size: 15px; }
+.note .eyebrow { margin-bottom: 6px; }
+
+/* projects */
+.project { background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; margin-bottom: 28px; }
+.project-head { padding: 28px 28px 0; }
+.project h3 { font-size: 28px; }
+.project .tag { font: 500 12px var(--mono); color: var(--ink-3); letter-spacing: .08em; text-transform: uppercase; margin-bottom: 8px; }
+.project-body { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 32px; padding: 20px 28px 28px; }
+@media (max-width: 860px) { .project-body { grid-template-columns: 1fr; } .project-head, .project-body { padding-left: 20px; padding-right: 20px; } }
+.project p { color: var(--ink-2); }
+.links { display: flex; flex-wrap: wrap; gap: 10px 20px; font-size: 15px; font-weight: 500; margin-top: 4px; }
+.stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; align-self: start; }
+.stat { padding: 14px 16px; border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+.stat:nth-child(2n) { border-right: 0; }
+.stat:nth-last-child(-n+2) { border-bottom: 0; }
+.stat b { display: block; font: 500 22px var(--mono); color: var(--ink); }
+.stat span { font-size: 13px; color: var(--ink-3); }
+ul.feat { margin: 0 0 18px; padding: 0; list-style: none; }
+ul.feat li { padding: 7px 0 7px 22px; position: relative; color: var(--ink-2); border-top: 1px solid var(--rule); font-size: 15px; }
+ul.feat li::before { content: ""; position: absolute; left: 2px; top: 17px; width: 8px; height: 1px; background: var(--accent); }
+ul.feat li b { color: var(--ink); font-weight: 600; }
+.shot { border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; background: #1e1e2e; }
+.shot + .figcap { margin-top: 8px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 14px 0 18px; }
+.chip { font: 12px var(--mono); color: var(--ink-2); border: 1px solid var(--rule-2); border-radius: 3px; padding: 2px 8px; }
+
+/* hardware log */
+.log { display: grid; gap: 0; border-top: 1px solid var(--rule-2); }
+.entry { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 20px; padding: 28px 0; border-bottom: 1px solid var(--rule); }
+@media (max-width: 560px) { .entry { grid-template-columns: 1fr; gap: 6px; } }
+.entry .id { font: 500 13px var(--mono); color: var(--accent); padding-top: 4px; }
+.entry h3 { font-size: 22px; margin-bottom: 10px; }
+.entry p { color: var(--ink-2); max-width: 46em; }
+.chain { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font: 13px var(--mono); margin: 4px 0 12px; }
+.chain span { background: var(--accent-bg); color: var(--ink); border: 1px solid var(--rule-2); border-radius: 3px; padding: 3px 8px; }
+.chain em { font-style: normal; color: var(--ink-3); font-size: 12px; }
+.chain .arr { color: var(--ink-3); }
+
+/* stack */
+.stack { width: 100%; border-collapse: collapse; }
+.stack th, .stack td { text-align: left; vertical-align: top; padding: 14px 0; border-top: 1px solid var(--rule); }
+.stack tr:last-child th, .stack tr:last-child td { border-bottom: 1px solid var(--rule); }
+.stack th { font: 500 12px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); width: 220px; padding-right: 20px; padding-top: 18px; }
+@media (max-width: 640px) { .stack th, .stack td { display: block; width: auto; } .stack th { padding-bottom: 0; } .stack td { border-top: 0; padding-top: 6px; } }
+.stack .chips { margin: 0; }
+
+/* contact */
+.contact { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+.card { background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; padding: 20px; text-decoration: none; color: var(--ink); display: block; }
+.card:hover { border-color: var(--accent); text-decoration: none; }
+.card .eyebrow { margin-bottom: 6px; }
+.card b { font-weight: 600; color: var(--accent); word-break: break-word; }
+
+footer { padding: 32px 0 48px; font-size: 13px; color: var(--ink-3); }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+footer a { color: var(--ink-2); }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="top">
+  <div class="wrap">
+    <a class="mark" href="#top" aria-label="Atahan Güney — home">
+      <svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="5" fill="#1f4e79"/><path d="M5 16c2.75-7 8.25-7 11 0s8.25 7 11 0" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round"/><path d="M5 16c2.75 4.2 8.25 4.2 11 0s8.25-4.2 11 0" stroke="#e57368" stroke-width="2.2" fill="none" stroke-linecap="round" opacity=".95"/></svg>
+      <span>Atahan Güney</span>
+    </a>
+    <div class="right">
+      <nav class="nav" aria-label="Sections">
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#hardware">Hardware</a>
+        <a href="#stack">Stack</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <button class="theme" type="button" id="theme" aria-label="Toggle colour theme">theme</button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <div class="hero" id="top">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow">3rd-year Electrical &amp; Electronics Engineering · Antalya Bilim University</p>
+        <h1>Atahan Güney</h1>
+        <p class="aka">also written: Atahan Guney · github.com/atahanguney</p>
+        <p class="lede">I'm a third-year electrical and electronics engineering student. Most of what I build comes from my courses and lab work: an electromagnetics workbench based on Ulaby and Cheng, a serial plotting tool I needed for microcontroller labs, and smaller projects on ESP32, Raspberry Pi Pico and Arduino.</p>
+        <div class="cta">
+          <a class="btn primary" href="https://atahanguney.github.io/ElectroField/">Open ElectroField</a>
+          <a class="btn ghost" href="https://github.com/atahanguney">GitHub profile</a>
+        </div>
+      </div>
+      <figure class="figure" aria-labelledby="figcap">
+        <svg viewBox="0 0 420 250" role="img" aria-label="Diagram of a uniform plane wave: the electric field oscillates vertically, the magnetic field horizontally, and power flows along the propagation axis.">
+          <defs>
+            <marker id="ah" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L8 4L0 8z" style="fill:var(--s)"/></marker>
+            <marker id="ax" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L8 4L0 8z" style="fill:var(--ink-3)"/></marker>
+          </defs>
+          <g style="stroke:var(--rule)" stroke-width="1">
+            <line x1="40" y1="20" x2="40" y2="230"/><line x1="120" y1="20" x2="120" y2="230"/><line x1="200" y1="20" x2="200" y2="230"/><line x1="280" y1="20" x2="280" y2="230"/><line x1="360" y1="20" x2="360" y2="230"/>
+            <line x1="20" y1="60" x2="400" y2="60"/><line x1="20" y1="190" x2="400" y2="190"/>
+          </g>
+          <line x1="20" y1="125" x2="402" y2="125" style="stroke:var(--ink-3)" stroke-width="1" marker-end="url(#ax)"/>
+          <text x="404" y="141" font-family="IBM Plex Mono, monospace" font-size="12" style="fill:var(--ink-3)" text-anchor="end">z</text>
+          <path id="ewave" fill="none" style="stroke:var(--e)" stroke-width="2.2"/>
+          <path id="hwave" fill="none" style="stroke:var(--h)" stroke-width="2.2" stroke-dasharray="5 4"/>
+          <g id="estems" style="stroke:var(--e)" stroke-width="1" opacity=".45"></g>
+          <line x1="300" y1="222" x2="388" y2="222" style="stroke:var(--s)" stroke-width="2" marker-end="url(#ah)"/>
+          <text x="300" y="214" font-family="IBM Plex Mono, monospace" font-size="12" style="fill:var(--s)">S = E × H</text>
+          <text x="26" y="40" font-family="IBM Plex Mono, monospace" font-size="12" style="fill:var(--e)">E</text>
+          <text x="26" y="160" font-family="IBM Plex Mono, monospace" font-size="12" style="fill:var(--h)">H</text>
+        </svg>
+        <figcaption class="figcap" id="figcap">
+          <span class="key"><i style="background:var(--e)"></i>E, x̂</span>
+          <span class="key"><i style="background:var(--h)"></i>H, ŷ (oblique view)</span>
+          <span class="key"><i style="background:var(--s)"></i>Poynting vector</span>
+          <span>e<sup>−αz</sup> cos(ωt − βz)</span>
+        </figcaption>
+      </figure>
+    </div>
+    <div class="wrap">
+      <table class="spec" aria-label="Profile summary">
+        <tr><th scope="row">Degree</th><td>B.Sc. Electrical &amp; Electronics Engineering, 3rd year · also studying computer programming</td></tr>
+        <tr><th scope="row">University</th><td>Antalya Bilim University, Antalya, Türkiye</td></tr>
+        <tr><th scope="row">Interests</th><td>Electromagnetics and wave propagation · embedded systems · signal processing · measurement tools</td></tr>
+        <tr><th scope="row">Built with</th><td>Python (NumPy, SciPy, OpenCV), MicroPython, C/C++, MATLAB, LTspice, KiCad</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <section id="about" aria-labelledby="about-h">
+    <div class="wrap two">
+      <div class="prose">
+        <p class="eyebrow"><span class="secnum">01</span>About</p>
+        <h2 id="about-h">About me</h2>
+        <p>I'm <strong>Atahan Güney</strong>, a 3rd-year student in the Department of Electrical and Electronics Engineering at <strong>Antalya Bilim University</strong>. Next to the degree I also study computer programming, which is probably why most of my projects end up half hardware and half software.</p>
+        <p>The subjects I enjoy most are electromagnetics and anything to do with signals: how a wave loses energy in a lossy medium, why a mismatched load gives a standing wave, how much filtering a noisy sensor really needs. I understand these best when I can change a parameter and see what happens, so I tend to write small tools for it. <strong>ElectroField</strong> is the biggest of those so far, and <strong>SerialScope</strong> came out of the microcontroller labs.</p>
+        <p>For hardware I mostly use ESP32, Raspberry Pi Pico 2W and Arduino boards. A good part of the time goes into the less exciting parts: soldering, checking things with a multimeter, getting a breadboard circuit to behave, and making the serial link between the board and the PC reliable.</p>
+      </div>
+      <aside class="note" aria-label="What I am working on">
+        <p class="eyebrow">Next on my list</p>
+        <ul class="feat"><li>A finite-difference (FDM) Laplace/Poisson solver in ElectroField, so it can handle electrodes of any shape and not only the textbook geometries.</li><li>Lossy waveguides (wall losses, attenuation constant).</li><li>More practice problem templates for each chapter.</li><li>A Turkish interface option for ElectroField.</li></ul>
+      </aside>
+    </div>
+  </section>
+
+  <section id="projects" aria-labelledby="projects-h">
+    <div class="wrap">
+      <p class="eyebrow"><span class="secnum">02</span>Software</p>
+      <h2 id="projects-h">Projects</h2>
+
+      <article class="project" aria-labelledby="ef-h">
+        <div class="project-head">
+          <p class="tag">Web app · Python engine in the browser</p>
+          <h3 id="ef-h">ElectroField</h3>
+        </div>
+        <div class="project-body">
+          <div>
+            <p>ElectroField is an interactive workbench for applied electromagnetics, using the notation of Ulaby &amp; Ravaioli and Cheng. You change ε, μ, σ, the frequency or the geometry, and a Python engine (NumPy/SciPy) recomputes the results and writes out the derivation step by step with the numbers substituted. The part I care about most is verification: every result is also checked in a second, independent way, for example a closed-form formula against a complex square root, Z<sub>in</sub> against an ABCD-matrix cascade, or the fields put back into Maxwell's equations to check the residual. If a check fails, the page shows it next to the numbers instead of hiding it.</p>
+            <ul class="feat">
+              <li><b>Topics:</b> coordinate systems, electrostatics, magnetostatics, Maxwell's equations, plane waves, reflection and transmission, transmission lines and the Smith chart, waveguides and antennas.</li>
+              <li><b>Runs in the browser:</b> the same Python code runs client-side with Pyodide (WebAssembly), so nothing needs to be installed. Locally it runs on a FastAPI server.</li>
+              <li><b>For practice:</b> 86 worked problems I wrote in the style of the textbooks (my own wording, with section references), a question bank with randomised values, and a built-in tutor that only uses numbers the engine computed.</li>
+              <li><b>Testing:</b> 439 pytest tests against textbook closed forms and limiting cases, and a verification report comparing 30 reference problems with the site's numbers (downloadable as CSV).</li>
+            </ul>
+            <div class="links">
+              <a href="https://atahanguney.github.io/ElectroField/">Live app →</a>
+              <a href="https://github.com/atahanguney/ElectroField">Source on GitHub</a>
+            </div>
+          </div>
+          <div class="stats" aria-label="ElectroField in numbers">
+            <div class="stat"><b>9</b><span>chapters + tools</span></div>
+            <div class="stat"><b>439</b><span>automated tests</span></div>
+            <div class="stat"><b>86</b><span>worked problems</span></div>
+            <div class="stat"><b>27</b><span>question templates</span></div>
+            <div class="stat"><b>30</b><span>reference cases in the report</span></div>
+            <div class="stat"><b>CODATA</b><span>constants via SciPy</span></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="project" aria-labelledby="ss-h">
+        <div class="project-head">
+          <p class="tag">Desktop tool · UART telemetry &amp; DSP</p>
+          <h3 id="ss-h">SerialScope</h3>
+        </div>
+        <div class="project-body">
+          <div>
+            <p>I made SerialScope because of a problem I kept running into in microcontroller labs. The sensor data was noisy, and every time I wanted to try a different filter or change a PID setpoint I had to edit the C code and flash the board again. SerialScope moves that part to the PC: it filters the incoming data in real time and lets me send new parameters back to the board while it is still streaming.</p>
+            <ul class="feat">
+              <li><b>Real-time low-pass filter (EMA):</b> raw and filtered channels on the same axes, α adjustable live.</li>
+              <li><b>Two-way control:</b> sliders and macros send plain ASCII commands such as <code>SETPOINT:25.0</code>, step pulses and E-stop over UART.</li>
+              <li><b>Threshold trigger</b> with a visual alarm, and <b>CSV export</b> for MATLAB, Excel or Python.</li>
+              <li><b>Virtual MCU mode:</b> a simulated noisy sensor, so the filter and control features can be tried without any board connected.</li>
+            </ul>
+            <div class="chips"><span class="chip">Python</span><span class="chip">PySerial</span><span class="chip">Tkinter</span><span class="chip">Matplotlib</span><span class="chip">threading</span></div>
+            <div class="links">
+              <a href="https://github.com/atahanguney/SerialScope">Source on GitHub →</a>
+            </div>
+          </div>
+          <div>
+            <div class="shot">
+              <picture>
+                <source srcset="assets/serialscope.webp" type="image/webp">
+                <img src="assets/serialscope.jpg" width="1238" height="766" loading="lazy" decoding="async" alt="SerialScope window: connection and DSP controls on the left, a live plot of a noisy raw signal, its EMA-filtered version and a reference channel in the centre, hardware tuning sliders and a UART monitor on the right.">
+              </picture>
+            </div>
+            <p class="figcap">SerialScope in simulation mode: raw CH1, EMA-filtered CH1 and CH2 reference.</p>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="hardware" aria-labelledby="hardware-h">
+    <div class="wrap">
+      <p class="eyebrow"><span class="secnum">03</span>Hardware &amp; IoT</p>
+      <h2 id="hardware-h">Hardware projects</h2>
+      <div class="log">
+        <article class="entry" aria-labelledby="hw1">
+          <div class="id">HW-01</div>
+          <div>
+            <h3 id="hw1">Computer-vision gesture → servo control</h3>
+            <div class="chain" aria-label="Signal chain: webcam, OpenCV, UART, Arduino, servo">
+              <span>Webcam</span><span class="arr">→</span><span>Python + OpenCV</span><span class="arr">→</span><span>UART</span><span class="arr">→</span><span>Arduino</span><span class="arr">→</span><span>Servo</span>
+            </div>
+            <p>Tracks my hand in the webcam image with OpenCV and turns its position into servo angles, which are sent to an Arduino over UART. Making the serial communication reliable and debugging the circuit on the breadboard was a big part of the work, not only the vision code.</p>
+          </div>
+        </article>
+        <article class="entry" aria-labelledby="hw2">
+          <div class="id">HW-02</div>
+          <div>
+            <h3 id="hw2">BLE notification display</h3>
+            <div class="chain" aria-label="Signal chain: phone, Bluetooth Low Energy, ESP32 running MicroPython, I2C, SSD1306 OLED">
+              <span>Phone</span><span class="arr">→</span><span>BLE</span><span class="arr">→</span><span>ESP32 · MicroPython</span><span class="arr">→</span><span>I²C</span><span class="arr">→</span><span>SSD1306 OLED</span>
+            </div>
+            <p>An ESP32 running MicroPython receives notifications from my phone over Bluetooth Low Energy and shows them on a small SSD1306 OLED screen over I²C. A simple project, but a good way to learn how BLE and I²C actually work on a real board.</p>
+          </div>
+        </article>
+        <article class="entry" aria-labelledby="hw3">
+          <div class="id">HW-03</div>
+          <div>
+            <h3 id="hw3">Telegram-controlled hardware &amp; thermal logging</h3>
+            <div class="chain" aria-label="Signal chain: Telegram bot, Wi-Fi, Raspberry Pi Pico 2W, relay, Morse output; temperature data to logger and plots">
+              <span>Telegram bot</span><span class="arr">→</span><span>Wi-Fi</span><span class="arr">→</span><span>Pico 2W</span><span class="arr">→</span><span>Relay</span><span class="arr">→</span><span>Morse audio</span>
+            </div>
+            <p>A Raspberry Pi Pico 2W / Raspberry Pi project where I send text commands to a Telegram bot and the board converts them to Morse code, switched through a relay module. I also wrote a script that logs the board's CPU temperature together with the ambient temperature and plots them, to compare the two.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="stack" aria-labelledby="stack-h">
+    <div class="wrap">
+      <p class="eyebrow"><span class="secnum">04</span>Tools</p>
+      <h2 id="stack-h">Technical stack</h2>
+      <table class="stack">
+        <tr><th scope="row">Microcontrollers</th><td><div class="chips"><span class="chip">ESP32 (WROOM / S3)</span><span class="chip">Raspberry Pi Pico 2W</span><span class="chip">RP2040</span><span class="chip">Raspberry Pi</span><span class="chip">Arduino</span></div></td></tr>
+        <tr><th scope="row">Embedded languages</th><td><div class="chips"><span class="chip">MicroPython</span><span class="chip">C / C++</span></div></td></tr>
+        <tr><th scope="row">Interfaces</th><td><div class="chips"><span class="chip">UART</span><span class="chip">I²C</span><span class="chip">BLE</span><span class="chip">Wi-Fi</span><span class="chip">relays &amp; servos</span></div></td></tr>
+        <tr><th scope="row">Software &amp; analysis</th><td><div class="chips"><span class="chip">Python</span><span class="chip">NumPy</span><span class="chip">SciPy</span><span class="chip">Matplotlib</span><span class="chip">OpenCV</span><span class="chip">PySerial</span><span class="chip">Tkinter</span><span class="chip">FastAPI</span><span class="chip">Pyodide</span><span class="chip">MATLAB</span></div></td></tr>
+        <tr><th scope="row">Circuit design</th><td><div class="chips"><span class="chip">LTspice</span><span class="chip">KiCad</span></div></td></tr>
+        <tr><th scope="row">Bench</th><td><div class="chips"><span class="chip">soldering</span><span class="chip">multimeter diagnostics</span><span class="chip">breadboard prototyping</span></div></td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section id="contact" aria-labelledby="contact-h">
+    <div class="wrap">
+      <p class="eyebrow"><span class="secnum">05</span>Contact</p>
+      <h2 id="contact-h">Contact</h2>
+      <p class="prose" style="color:var(--ink-2);max-width:40em">If you want to reach me about an internship, a project or one of the tools here, LinkedIn is the easiest way. If you find a bug in ElectroField or SerialScope, opening an issue on GitHub is also very welcome.</p>
+      <div class="contact">
+        <a class="card" href="https://www.linkedin.com/in/atahan-g%C3%BCney" rel="me">
+          <p class="eyebrow">LinkedIn</p>
+          <b>linkedin.com/in/atahan-güney</b>
+        </a>
+        <a class="card" href="https://github.com/atahanguney" rel="me">
+          <p class="eyebrow">GitHub</p>
+          <b>github.com/atahanguney</b>
+        </a>
+        <a class="card" href="https://atahanguney.github.io/ElectroField/">
+          <p class="eyebrow">Live project</p>
+          <b>atahanguney.github.io/ElectroField</b>
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Atahan Güney (Atahan Guney)</span>
+    <span>Antalya Bilim University · <a href="https://github.com/atahanguney/atahanguney.github.io">site source</a></span>
+  </div>
+</footer>
+
+<script>
+// Theme toggle: remembered per browser; falls back to the system setting.
+(function () {
+  var root = document.documentElement, btn = document.getElementById('theme');
+  try { var t = localStorage.getItem('theme'); if (t) root.setAttribute('data-theme', t); } catch (e) {}
+  function label() {
+    var dark = root.getAttribute('data-theme') ? root.getAttribute('data-theme') === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+    btn.textContent = dark ? 'light' : 'dark';
+  }
+  btn.addEventListener('click', function () {
+    var dark = root.getAttribute('data-theme') ? root.getAttribute('data-theme') === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+    var next = dark ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('theme', next); } catch (e) {}
+    label();
+  });
+  label();
+})();
+
+// Hero figure: a damped plane wave, E in the plane of the page and H drawn obliquely.
+(function () {
+  var x0 = 20, x1 = 400, y0 = 125, A = 72, n = 160, k = 2 * Math.PI / 150, a = 0.0016;
+  function path(scale, skew) {
+    var d = '';
+    for (var i = 0; i <= n; i++) {
+      var x = x0 + (x1 - x0) * i / n, z = x - x0, v = A * Math.exp(-a * z) * Math.cos(k * z);
+      d += (i ? 'L' : 'M') + (x + skew * v).toFixed(1) + ' ' + (y0 - scale * v).toFixed(1);
+    }
+    return d;
+  }
+  document.getElementById('ewave').setAttribute('d', path(1, 0));
+  document.getElementById('hwave').setAttribute('d', path(-0.42, 0.42));
+  var g = document.getElementById('estems'), ns = 'http://www.w3.org/2000/svg';
+  for (var z = 0; z <= 380; z += 12.5) {
+    var v = A * Math.exp(-a * z) * Math.cos(k * z), l = document.createElementNS(ns, 'line');
+    l.setAttribute('x1', x0 + z); l.setAttribute('x2', x0 + z); l.setAttribute('y1', y0); l.setAttribute('y2', (y0 - v).toFixed(1));
+    g.appendChild(l);
+  }
+})();
+</script>
+</body>
+</html>
