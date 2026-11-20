@@ -42,7 +42,7 @@
       "image": "https://atahanguney.github.io/assets/og.png",
       "jobTitle": "Electrical and Electronics Engineering Student (3rd year)",
       "affiliation": { "@type": "CollegeOrUniversity", "name": "Antalya Bilim University", "alternateName": "Antalya Bilim Üniversitesi" },
-      "knowsAbout": ["Embedded systems", "IoT", "Computer vision", "OpenCV", "Applied electromagnetics", "Digital signal processing", "UART", "I2C", "Bluetooth Low Energy", "ESP32", "ESP32-S3", "Raspberry Pi", "Raspberry Pi Pico", "Arduino", "MicroPython", "Python", "C/C++", "MATLAB", "LTspice", "KiCad", "Perfboard soldering"],
+      "knowsAbout": ["Embedded systems", "IoT", "Computer vision", "OpenCV", "Applied electromagnetics", "Digital signal processing", "UART", "I2C", "Bluetooth Low Energy", "ESP32", "Raspberry Pi Pico", "Arduino", "MicroPython", "Python", "C/C++", "MATLAB", "LTspice", "KiCad", "Perfboard soldering"],
       "sameAs": ["https://github.com/atahanguney", "https://www.linkedin.com/in/atahan-g%C3%BCney"]
     },
     { "@type": "WebSite", "@id": "https://atahanguney.github.io/#site", "url": "https://atahanguney.github.io/", "name": "Atahan Güney", "inLanguage": ["en", "tr"], "publisher": { "@id": "https://atahanguney.github.io/#person" } },
@@ -69,8 +69,8 @@
         <a href="/projects/"><span lang="en">Projects</span><span lang="tr">Projeler</span></a>
         <a href="/notes/"><span lang="en">Notes</span><span lang="tr">Notlar</span></a>
         <a href="/about/"><span lang="en">About</span><span lang="tr">Hakkımda</span></a>
-        <a href="#contact"><span lang="en">Contact</span><span lang="tr">İletişim</span></a>
       </nav>
+      <span class="social"><a href="https://github.com/atahanguney" rel="me noopener" target="_blank" aria-label="GitHub: atahanguney" title="GitHub"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a><a href="https://www.linkedin.com/in/atahan-g%C3%BCney" rel="me noopener" target="_blank" aria-label="LinkedIn: Atahan Güney" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a></span>
       <span class="switch" role="group" aria-label="Language / Dil"><a href="?lang=en" data-setlang="en" hreflang="en">EN</a><a href="?lang=tr" data-setlang="tr" hreflang="tr">TR</a></span>
       <button class="theme" id="theme" type="button" aria-label="Toggle colour theme">theme</button>
       <button class="theme menu-btn" id="menu" type="button" aria-expanded="false" aria-controls="nav">menu</button>
@@ -96,40 +96,50 @@
         </div>
       </div>
       <figure class="figure" aria-labelledby="figcap">
-        <svg viewBox="0 0 420 250" role="img" aria-label="Animated diagram of a damped uniform plane wave. The electric field oscillates vertically, the magnetic field is drawn obliquely, and power flows along the z axis.">
+        <div class="fig-head">
+          <b><span lang="en">Standing wave on a mismatched line</span><span lang="tr">Uyumsuz hatta duran dalga</span></b>
+          <a href="https://atahanguney.github.io/ElectroField/">ElectroField · <span lang="en">transmission lines</span><span lang="tr">iletim hatları</span></a>
+        </div>
+        <svg id="swr" viewBox="0 0 420 262" role="img" aria-label="Voltage standing wave on a 50 ohm lossless transmission line terminated in a 100 plus j50 ohm load. The envelope swings between 0.55 and 1.45 of the incident amplitude, giving a VSWR of 2.62. Maxima repeat every half wavelength and the first minimum is 0.287 wavelengths from the load.">
           <defs>
-            <marker id="ah" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L8 4L0 8z" style="fill:var(--s)"/></marker>
-            <marker id="ax" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L8 4L0 8z" style="fill:var(--ink-3)"/></marker>
+            <marker id="dim" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L8 4L0 8z" style="fill:var(--ink-3)"/></marker>
           </defs>
-          <g style="stroke:var(--rule)" stroke-width="1">
-            <line x1="40" y1="20" x2="40" y2="230"/><line x1="120" y1="20" x2="120" y2="230"/><line x1="200" y1="20" x2="200" y2="230"/><line x1="280" y1="20" x2="280" y2="230"/><line x1="360" y1="20" x2="360" y2="230"/>
-            <line x1="20" y1="60" x2="400" y2="60"/><line x1="20" y1="190" x2="400" y2="190"/>
+          <g id="swr-grid" style="stroke:var(--rule)" stroke-width="1"></g>
+          <path id="swr-band" style="fill:var(--h)" opacity=".07"/>
+          <line x1="30" y1="112" x2="380" y2="112" style="stroke:var(--ink-3)" stroke-width="1"/>
+          <path id="swr-env" fill="none" style="stroke:var(--h)" stroke-width="2"/>
+          <path id="swr-env2" fill="none" style="stroke:var(--h)" stroke-width="1.4" stroke-dasharray="4 3"/>
+          <path id="swr-v" fill="none" style="stroke:var(--e)" stroke-width="2"/>
+          <g id="swr-marks" font-family="IBM Plex Mono, monospace" font-size="10"></g>
+          <g id="swr-ticks" font-family="IBM Plex Mono, monospace" font-size="10" style="fill:var(--ink-3)" text-anchor="middle"></g>
+          <g style="stroke:var(--ink-2)" stroke-width="1.4" fill="none">
+            <circle cx="20" cy="236" r="9"/><path d="M15 236q2.5-5 5 0t5 0"/>
+            <line x1="29" y1="230" x2="380" y2="230"/><line x1="29" y1="242" x2="380" y2="242"/>
           </g>
-          <line x1="20" y1="125" x2="402" y2="125" style="stroke:var(--ink-3)" stroke-width="1" marker-end="url(#ax)"/>
-          <text x="404" y="141" font-family="IBM Plex Mono, monospace" font-size="12" style="fill:var(--ink-3)" text-anchor="end">z</text>
-          <g id="estems" style="stroke:var(--e)" stroke-width="1" opacity=".4"></g>
-          <path id="ewave" fill="none" style="stroke:var(--e)" stroke-width="2.2"/>
-          <path id="hwave" fill="none" style="stroke:var(--h)" stroke-width="2.2" stroke-dasharray="5 4"/>
-          <line x1="300" y1="222" x2="388" y2="222" style="stroke:var(--s)" stroke-width="2" marker-end="url(#ah)"/>
-          <text x="300" y="214" font-family="IBM Plex Mono, monospace" font-size="12" style="fill:var(--s)">S = E × H</text>
-          <text x="26" y="40" font-family="IBM Plex Mono, monospace" font-size="12" style="fill:var(--e)">E</text>
-          <text x="26" y="160" font-family="IBM Plex Mono, monospace" font-size="12" style="fill:var(--h)">H</text>
+          <rect x="380" y="226" width="26" height="20" rx="2" style="fill:var(--accent-bg);stroke:var(--ink-2)" stroke-width="1.4"/>
+          <text x="393" y="240" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" style="fill:var(--ink)">Z<tspan font-size="7" dy="2">L</tspan></text>
+          <text x="205" y="256" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" style="fill:var(--ink-3)">Z₀ = 50 Ω · lossless line</text>
         </svg>
         <figcaption class="figcap" id="figcap">
-          <span class="key"><i style="background:var(--e)"></i>E, x̂</span>
-          <span class="key"><i style="background:var(--h)"></i>H, ŷ</span>
-          <span class="key"><i style="background:var(--s)"></i>Poynting</span>
-          <span>e<sup>−αz</sup> cos(ωt − βz)</span>
+          <span class="key"><i style="background:var(--h)"></i>|V(d)| / V₀⁺</span>
+          <span class="key"><i style="background:var(--e)"></i>v(d, t)</span>
+          <span>V(d) = V₀⁺(e<sup>jβd</sup> + Γe<sup>−jβd</sup>)</span>
         </figcaption>
+        <div class="fig-vals">
+          <span><i>Z<sub>L</sub></i> 100 + j50 Ω</span>
+          <span><i>Γ</i> 0.447∠26.6°</span>
+          <span><i>VSWR</i> 2.62</span>
+          <span><i>d<sub>min</sub></i> 0.287λ</span>
+        </div>
       </figure>
     </div>
   </div>
 
   <div class="band" aria-label="At a glance">
     <div><b>6</b><span lang="en">projects with write-ups</span><span lang="tr">anlatımlı proje</span></div>
-    <div><b>5</b><span lang="en">dev boards in use</span><span lang="tr">kullandığım geliştirme kartı</span></div>
+    <div><b>3</b><span lang="en">dev boards on my desk</span><span lang="tr">masamdaki geliştirme kartı</span></div>
     <div><b>439</b><span lang="en">automated tests in ElectroField</span><span lang="tr">ElectroField'daki otomatik test</span></div>
-    <div><b>2</b><span lang="en">programmes: EEE + programming</span><span lang="tr">program: EEM + programcılık</span></div>
+    <div><b>2</b><span lang="en">degrees in progress: EEE + Computer Programming</span><span lang="tr">devam eden program: EEM + Bilgisayar Programcılığı</span></div>
   </div>
 
   <section id="work" aria-labelledby="work-h">
@@ -268,9 +278,23 @@
         </div>
       </div>
       <aside class="note">
+        <p class="eyebrow"><span lang="en">Skills</span><span lang="tr">Yetenekler</span></p>
+        <div class="chips">
+          <span class="chip" lang="en">Embedded systems</span><span class="chip" lang="tr">Gömülü sistemler</span>
+          <span class="chip">IoT</span>
+          <span class="chip" lang="en">Hardware–software integration</span><span class="chip" lang="tr">Donanım–yazılım entegrasyonu</span>
+          <span class="chip" lang="en">Circuit prototyping</span><span class="chip" lang="tr">Devre prototipleme</span>
+          <span class="chip" lang="en">Soldering</span><span class="chip" lang="tr">Lehimleme</span>
+          <span class="chip" lang="en">Circuit debugging</span><span class="chip" lang="tr">Devre arıza tespiti</span>
+          <span class="chip" lang="en">Electromagnetics</span><span class="chip" lang="tr">Elektromanyetik</span>
+          <span class="chip">Python</span><span class="chip">NumPy / SciPy</span><span class="chip">OpenCV</span>
+          <span class="chip" lang="en">Computer vision</span><span class="chip" lang="tr">Görüntü işleme</span>
+          <span class="chip">MicroPython</span><span class="chip">C/C++</span><span class="chip">MATLAB</span><span class="chip">LTspice</span>
+          <span class="chip">UART · I²C · BLE</span>
+        </div>
         <p class="eyebrow"><span lang="en">On my desk</span><span lang="tr">Masamda</span></p>
         <div class="chips">
-          <span class="chip">ESP32</span><span class="chip">ESP32-S3</span><span class="chip">Raspberry Pi</span><span class="chip">Raspberry Pi Pico 2W</span><span class="chip">Arduino Uno</span>
+          <span class="chip">ESP32</span><span class="chip">Raspberry Pi Pico 2W</span><span class="chip">Arduino Uno</span>
         </div>
         <div class="chips">
           <span class="chip" lang="en">relay modules</span><span class="chip" lang="tr">röle modülleri</span>
